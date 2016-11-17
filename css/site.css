@@ -1,0 +1,23 @@
+body {
+    font-family: Arial, Verdana, sans-serif;
+}
+.map {
+    width: 600px;
+    height: 400px;
+}
+
+.map-option {
+	padding-right: 10px;
+}
+
+.colorscale {
+    height: 400px;
+}
+
+.left {
+    float: left;
+}
+
+.choices-title {
+	font-size: 90%;
+}

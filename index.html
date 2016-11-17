@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <title>Ashfall</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="css/site.css" />
+    <script src="js/jquery-3.1.1.min.js"></script>
+    <link rel="stylesheet" href="js/leaflet/leaflet.css" />
+    <script src="js/leaflet/leaflet.js"></script>
+    <script src="js/d3/d3.min.js"></script>
+    <script src="js/aep-mapping.js"></script>
+</head>
+<body>
+
+
+<h1>AEP</h1>
+<div>
+    <span class="choices-title">Country:</span>
+    <span class="map-option">
+        <select id="country" class="map-option">
+            <option value="Sudan">Sudan</option>
+        </select>
+    </span>
+
+    <span class="choices-title">Colour scheme:</span>
+    <span class="map-option">
+        <select id="colourscheme">
+            <option value="jet">Jet (old MatPlotLib default)</option>
+        </select>
+    </span>
+    <button id="btn-map-options">Go</button>
+</div>
+<div id="mapid" class="map left"></div>
+<div id="scaleid" class="colorscale"></div>
+
+<script>
+    $(document).ready(function () {
+        var defaultCountry = "Sudan",
+            defaultColourScheme = "jet";
+
+        function drawMap (country, colourScheme) {
+            console.log(country, colourScheme);
+            Ashfall.maps.drawMap('mapid', 'scaleid', country, colourScheme);
+        }
+        $( "#btn-map-options" ).on( "click", function( event ) {
+            var country = $("#country").val(),
+                colourScheme = $("#colourscheme").val();
+                drawMap(country, colourScheme);
+        });
+        drawMap(defaultCountry, defaultColourScheme);
+    });
+    
+</script>
+
+
+
+</body>
+</html>
