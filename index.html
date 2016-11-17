@@ -23,34 +23,48 @@
     <span class="map-option">
         <select id="country" class="map-option">
             <option value="Sudan">Sudan</option>
+            <option value="Uganda">Uganda</option>
         </select>
     </span>
 
     <span class="choices-title">Colour scheme:</span>
     <span class="map-option">
         <select id="colourscheme">
-            <option value="jet">Jet (old MatPlotLib default)</option>
+            <option value="viridis">MatPlotLib Viridis</option>
+            <option value="jet">MatPlotLib Jet</option>
+            <option value="magma">MatPlotLib Magma</option>
+            <option value="inferno">MatPlotLib Inferno</option>
+            <option value="plasma">MatPlotLib Plasma</option>
         </select>
     </span>
-    <button id="btn-map-options">Go</button>
 </div>
 <div id="mapid" class="map left"></div>
 <div id="scaleid" class="colorscale"></div>
 
 <script>
     $(document).ready(function () {
-        var defaultCountry = "Sudan",
-            defaultColourScheme = "jet";
+        var defaultCountry = $("#country").val(),
+            defaultColourScheme = $("#colourscheme").val();
 
         function drawMap (country, colourScheme) {
             console.log(country, colourScheme);
             Ashfall.maps.drawMap('mapid', 'scaleid', country, colourScheme);
         }
-        $( "#btn-map-options" ).on( "click", function( event ) {
+        function redrawMap () {
             var country = $("#country").val(),
                 colourScheme = $("#colourscheme").val();
-                drawMap(country, colourScheme);
+            drawMap(country, colourScheme);
+        }
+
+        // Set up event handlers for changes to selections
+        $("#country" ).on("change", function( event ) {
+            redrawMap();
         });
+        $("#colourscheme" ).on("change", function( event ) {
+            redrawMap();
+        });
+
+        // Draw the default map (when page first loads)
         drawMap(defaultCountry, defaultColourScheme);
     });
     
