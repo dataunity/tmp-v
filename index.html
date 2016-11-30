@@ -18,18 +18,37 @@
 
 
 <h1>AEP</h1>
-<div>
-    <span class="choices-title">Country:</span>
+<div class="choices-row">
+    <span class="choices-title">Country: <br><small>(ctrl click to select more than one country)</small></span>
     <span class="map-option">
-        <select id="country" class="map-option">
-            <option value="Sudan">Sudan</option>
-            <option value="Uganda">Uganda</option>
+        <select id="countries" multiple size="5" class="map-option">
+            <optgroup label="Africa">
+                <option value="sudan,uganda,southafrica" class="country-group">All Africa</option>
+                <option value="sudan" selected>Sudan</option>
+                <option value="uganda">Uganda</option>
+                <option value="southafrica">South Africa</option>
+            </optgroup>
         </select>
     </span>
-
+</div>
+<div class="choices-row">
+    <span class="choices-title">Threshold:</span>
+    <span class="map-option">
+        <select id="threshold">
+            <option value="0.1">0.1</option>
+            <option value="1">1.0</option>
+            <option value="10">10.0</option>
+            <option value="100">100.0</option>
+            <option value="1000">1,000.0</option>
+            <option value="10000">10,000.0</option>
+        </select>
+    </span>
+</div>
+<div class="choices-row">
     <span class="choices-title">Colour scheme:</span>
     <span class="map-option">
         <select id="colourscheme">
+            <option value="hot">MatPlotLib Hot</option>
             <option value="viridis">MatPlotLib Viridis</option>
             <option value="jet">MatPlotLib Jet</option>
             <option value="magma">MatPlotLib Magma</option>
@@ -38,34 +57,50 @@
         </select>
     </span>
 </div>
-<div id="mapid" class="map left"></div>
-<div id="scaleid" class="colorscale"></div>
+<div id="map" class="map left"></div>
+<div id="color-scale" class="colorscale"></div>
+<div id="data-details" class="data-text"></div>
 
 <script>
     $(document).ready(function () {
-        var defaultCountry = $("#country").val(),
+        function getCountriesSelection () {
+            // Gets the selected countries as an array
+            var countries = d3.set();
+            // Choices list can have single countries,
+            // or comma separated lists of countries
+            $.each($("#countries").val(), function (i, selectedVal) {
+                // Find comma separated lists of countries in
+                // selected option
+                $.each(selectedVal.split(","), function (i, country) {
+                    countries.add(country);
+                });
+            });
+            return countries.values();
+        }
+
+        var defaultCountries = getCountriesSelection(),
+            defaultThreshold = parseFloat($("#threshold").val()),
             defaultColourScheme = $("#colourscheme").val();
 
-        function drawMap (country, colourScheme) {
-            console.log(country, colourScheme);
-            Ashfall.maps.drawMap('mapid', 'scaleid', country, colourScheme);
+        function drawMap (countries, threshold, colourScheme) {
+            console.log(countries, threshold, colourScheme);
+            Ashfall.maps.drawMap('map', 'color-scale', 'data-details', countries, threshold, colourScheme);
         }
+
         function redrawMap () {
-            var country = $("#country").val(),
+            var countries = getCountriesSelection(),
+                threshold = parseFloat($("#threshold").val()),
                 colourScheme = $("#colourscheme").val();
-            drawMap(country, colourScheme);
+            drawMap(countries, threshold, colourScheme);
         }
 
         // Set up event handlers for changes to selections
-        $("#country" ).on("change", function( event ) {
-            redrawMap();
-        });
-        $("#colourscheme" ).on("change", function( event ) {
+        $(".map-option").on("change", function( event ) {
             redrawMap();
         });
 
         // Draw the default map (when page first loads)
-        drawMap(defaultCountry, defaultColourScheme);
+        drawMap(defaultCountries, defaultThreshold, defaultColourScheme);
     });
     
 </script>
