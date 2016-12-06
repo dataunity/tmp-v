@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<NetworkLink>
+	<name>Global Volcanism Program - Holocene Volcanoes</name>
+	<Snippet maxLines="0"></Snippet>
+	<description>All known volcanoes active during the Holocene period (last 10,000 years). Compiled by the Global Volcanism Program.</description>
+	<open>1</open>
+	<Link>
+		<href>http://www.volcano.si.edu/ge/GVPWorldVolcanoes-List.kmz</href>
+		<refreshMode>onInterval</refreshMode>
+		<refreshInterval>604800</refreshInterval>
+	</Link>
+</NetworkLink>
+</kml>
+<!-- Refresh is set for 7 days = 604800 -->

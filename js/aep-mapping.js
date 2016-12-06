@@ -1,5 +1,197 @@
 var Ashfall = {};
 
+Ashfall.volcanoes = (function () {
+    // Note volcano names copied using this script:
+    // https://github.com/susannajenkins/Ashfall/wiki/Helper-scripts
+    var volcanoNames = ['West Eifel Volcanic Field', 'Chaine des Puys',
+            'Calatrava Volcanic Field', 'Larderello', 'Campi Flegrei',
+            'Vesuvius', 'Ischia', 'Stromboli', 'Lipari', 'Vulcano', 'Etna',
+            'Pantelleria', 'Methana', 'Milos', 'Santorini', 'Nisyros',
+            'Acigol-Nevsehir', 'Erciyes Dagi', 'Nemrut Dagi', 'Suphan Dagi',
+            'Tendurek Dagi', 'Ararat', 'Elbrus', 'Porak', 'Tskhouk-Karckar',
+            'Tair, Jebel at', 'Zubair Group', 'Dallol', 'Dalaffilla',
+            'Erta Ale', 'Dubbi', 'Alayta', 'Dabbahu', 'Manda Hararo',
+            'Manda-Inakir', 'Ardoukoba', 'Dama Ali', 'Kone', 'Tullu Moje',
+            'Alutu', 'South Island', 'Barrier, The', 'Namarunu',
+            'Emuruangogolak', 'Silali', 'Paka', 'Menengai', 'Olkaria',
+            'Longonot', 'Lengai, Ol Doinyo', 'Chyulu Hills', 'Meru', 'Ngozi',
+            'Rungwe', 'Kyejo', 'Fort Portal', 'Nyamuragira', 'Nyiragongo',
+            'Visoke', 'Cameroon', 'Marra, Jebel', 'Meidob Volcanic Field',
+            "'Uwayrid, Harrat", 'Khaybar, Harrat', 'Rahat, Harrat',
+            'Yar, Jabal', 'Arhab, Harra of', 'Dhamar, Harras of',
+            'Sawad, Harra es-', 'Mayotte Island', 'Karthala',
+            'Itasy Volcanic Field', 'Fournaise, Piton de la', 'St. Paul',
+            'Heard', 'McDonald Islands', 'Marion Island',
+            'Kaikohe-Bay of Islands', 'Auckland Field', 'Mayor Island',
+            'Taranaki [Egmont]', 'White Island', 'Okataina', 'Reporoa', 'Maroa',
+            'Taupo', 'Tongariro', 'Ruapehu', 'Macauley Island', 'Raoul Island',
+            'Tofua', 'Late', 'Fonualei', "Niuafo'ou", 'Ofu-Olosega', "Savai'i",
+            'Taveuni', 'Nabukelevu', 'St. Andrew Strait', 'Bam', 'Manam',
+            'Karkar', 'Long Island', 'Ritter Island', 'Langila', 'Dakataua',
+            'Garbuna Group', 'Pago', 'Hargy', 'Bamus', 'Ulawun', 'Lolobau',
+            'Rabaul', 'Tavui', 'Lamington', 'Victory', 'Waiowa', 'Ambitle',
+            'Billy Mitchell', 'Bagana', 'Loloru', 'Simbo', 'Savo', 'Tinakula',
+            'Suretamatai', 'Gaua', 'Aoba', 'Ambrym', 'Lopevi', 'Epi', 'Kuwae',
+            'Yasur', 'Matthew Island', 'Hunter Island',
+            'Newer Volcanics Province', 'Barren Island', 'Seulawah Agam',
+            'Peuet Sague', 'Telong, Bur ni', 'Sibayak', 'Sinabung',
+            'Sorikmarapi', 'Marapi', 'Tandikat', 'Talang', 'Kerinci', 'Sumbing',
+            'Kaba', 'Dempo', 'Besar', 'Suoh', 'Krakatau', 'Perbakti-Gagak',
+            'Salak', 'Gede', 'Tangkubanparahu', 'Papandayan', 'Guntur',
+            'Galunggung', 'Cereme', 'Slamet', 'Dieng Volcanic Complex',
+            'Sundoro', 'Sumbing', 'Merbabu', 'Merapi', 'Lawu', 'Kelut',
+            'Arjuno-Welirang', 'Semeru', 'Tengger Caldera', 'Lamongan', 'Raung',
+            'Ijen', 'Batur', 'Agung', 'Rinjani', 'Tambora', 'Sangeang Api',
+            'Ranakah', 'Inierie', 'Inielika', 'Ebulobo', 'Iya', 'Kelimutu',
+            'Paluweh', 'Egon', 'Lewotobi', 'Leroboleng', 'Iliboleng',
+            'Lewotolo', 'Iliwerung', 'Tara, Batu', 'Sirung', 'Gunungapi Wetar',
+            'Wurlali', 'Teon', 'Nila', 'Serua', 'Banda Api', 'Colo [Una Una]',
+            'Soputan', 'Lokon-Empung', 'Mahawu', 'Tongkoko', 'Ruang',
+            'Karangetang [Api Siau]', 'Awu', 'Dukono', 'Ibu', 'Gamkonora',
+            'Gamalama', 'Makian', 'Parker', 'Matutum', 'Leonard Range',
+            'Makaturing', 'Ragang', 'Musuan', 'Camiguin', 'Kanlaon', 'Cabalian',
+            'Biliran', 'Bulusan', 'Mayon', 'San Pablo Volcanic Field', 'Taal',
+            'Pinatubo', 'Cagua', 'Camiguin de Babuyanes', 'Didicas',
+            'Babuyan Claro', 'Iraya', 'Hainan Dao', 'Tatun Group',
+            'Iwo-Tori-shima', 'Yokoate-jima', 'Suwanose-jima', 'Nakano-shima',
+            'Kuchino-shima', 'Kuchinoerabu-jima', 'Kikai',
+            'Ibusuki Volcanic Field', 'Sakura-jima', 'Sumiyoshi-ike',
+            'Kirishima', 'Fukue-jima', 'Unzen', 'Aso', 'Kuju', 'Tsurumi', 'Abu',
+            'Sanbe', 'Izu-Tobu', 'Hakone', 'Fuji', 'Kita Yatsuga-take',
+            'On-take', 'Haku-san', 'Norikura', 'Yake-dake', 'Tate-yama',
+            'Niigata-Yake-yama', 'Myoko', 'Asama', 'Kusatsu-Shirane', 'Haruna',
+            'Hiuchi', 'Nikko-Shirane', 'Nantai', 'Takahara', 'Nasu', 'Numazawa',
+            'Bandai', 'Adatara', 'Azuma', 'Zao', 'Narugo', 'Kurikoma', 'Chokai',
+            'Akita-Komaga-take', 'Iwate', 'Hachimantai', 'Akita-Yake-yama',
+            'Megata', 'Iwaki', 'Towada', 'Hakkoda Group', 'Oshima', 'Nii-jima',
+            'Kozu-shima', 'Miyake-jima', 'Mikura-jima', 'Hachijo-jima',
+            'Aoga-shima', 'Tori-shima', 'Nishino-shima', 'Kita-Iwo-jima',
+            'Ioto [Iwo-jima]', 'Farallon de Pajaros', 'Asuncion', 'Agrigan',
+            'Pagan', 'Alamagan', 'Guguan', 'Anatahan', 'Oshima-Oshima', 'E-san',
+            'Komaga-take', 'Usu', 'Niseko', 'Yotei', 'Kuttara', 'Shikotsu',
+            'Rishiri', 'Tokachi', 'Daisetsu', 'Nipesotsu-Maruyama', 'Akan',
+            'Kutcharo', 'Mashu', 'Rausu', 'Shiretoko-Iwo-zan', 'Kolokol Group',
+            'Chirpoi', 'Goriaschaia Sopka', 'Zavaritzki Caldera', 'Prevo Peak',
+            'Ketoi', 'Ushishur', 'Rasshua', 'Sarychev Peak', 'Raikoke',
+            'Chirinkotan', 'Ekarma', 'Sinarka', 'Kharimkotan',
+            'Tao-Rusyr Caldera', 'Nemo Peak', 'Fuss Peak', 'Karpinsky Group',
+            'Chikurachki', 'Ebeko', 'Alaid', 'Kambalny', 'Koshelev', 'Yavinsky',
+            'Diky Greben', 'Kurile Lake', 'Ilyinsky', 'Zheltovsky', 'Ksudach',
+            'Khodutka', 'Mutnovsky', 'Gorely', 'Opala', 'Tolmachev Dol',
+            'Vilyuchik', 'Barkhatnaya Sopka', 'Koryaksky', 'Avachinsky',
+            'Zhupanovsky', 'Veer', 'Kostakan', 'Bakening', 'Zavaritsky',
+            'Akademia Nauk', 'Karymsky', 'Maly Semiachik', 'Taunshits', 'Uzon',
+            'Kikhpinych', 'Krasheninnikov', 'Kronotsky', 'Gamchen', 'Kizimen',
+            'Tolbachik', 'Bezymianny', 'Kliuchevskoi', 'Ushkovsky', 'Shiveluch',
+            'Khangar', 'Cherpuk Group', 'Ichinsky', 'Bolshoi-Kekuknaysky',
+            'Alney-Chashakondzha', 'Terpuk', 'Sedankinsky', 'Gorny Institute',
+            'Kinenin', 'Bliznetsy', 'Elovsky', 'Spokoiny', 'Ostry', 'Severny',
+            'Udokan Plateau', 'Taryatu-Chulutu', 'Turfan',
+            'Tianshan Volcanic Group', 'Kunlun Volcanic Group', 'Arshan',
+            'Wudalianchi', 'Jingbo', 'Longgang Group', 'Changbaishan',
+            'Ulreung', 'Halla', 'Kiska', 'Little Sitkin', 'Semisopochnoi',
+            'Gareloi', 'Tanaga', 'Takawangha', 'Kanaga', 'Moffett',
+            'Great Sitkin', 'Kasatochi', 'Atka', 'Korovin', 'Seguam', 'Amukta',
+            'Yunaska', 'Cleveland', 'Vsevidof', 'Okmok', 'Makushin', 'Akutan',
+            'Westdahl', 'Fisher', 'Shishaldin', 'Roundtop', 'Pavlof', 'Dana',
+            'Kupreanof', 'Veniaminof', 'Black Peak', 'Aniakchak', 'Yantarni',
+            'Chiginagak', 'Ugashik-Peulik', 'Ukinrek Maars', 'Martin', 'Mageik',
+            'Trident', 'Katmai', 'Novarupta', 'Griggs', 'Snowy Mountain',
+            'Kaguyak', 'Fourpeaked', 'Augustine', 'Iliamna', 'Redoubt', 'Spurr',
+            'Hayes', 'St. Paul Island', 'Imuruk Lake', 'Buzzard Creek',
+            'Wrangell', 'Churchill', 'Edgecumbe', 'Edziza',
+            'Iskut-Unuk River Cones', 'Tseax River Cone', 'Nazko',
+            'Wells Gray-Clearwater', 'Meager', 'Garibaldi', 'Baker',
+            'Glacier Peak', 'Rainier', 'Adams', 'St. Helens', 'West Crater',
+            'Indian Heaven', 'Hood', 'Jefferson', 'Blue Lake Crater',
+            'Sand Mountain Field', 'Belknap', 'North Sister Field',
+            'South Sister', 'Bachelor', 'Davis Lake', 'Newberry', 'Crater Lake',
+            'Diamond Craters', 'Jordan Craters', 'Shasta', 'Medicine Lake',
+            'Lassen Volcanic Center', 'Mono Craters', 'Inyo Craters',
+            'Mammoth Mountain', 'Ubehebe Craters', 'Golden Trout Creek',
+            'Salton Buttes', 'Wapi Lava Field', 'Yellowstone',
+            'Black Rock Desert', 'Carrizozo', 'Zuni-Bandera', 'Dotsero',
+            'Uinkaret Field', 'Sunset Crater', 'Kilauea', 'Mauna Loa',
+            'Mauna Kea', 'Hualalai', 'Haleakala', 'Barcena', 'Socorro',
+            'Ceboruco', 'Colima', 'Michoacan-Guanajuato', 'Jocotitlan',
+            'Toluca, Nevado de', 'Chichinautzin', 'Popocatepetl',
+            'Malinche, La', 'Naolinco Volcanic Field', 'Cofre de Perote',
+            'Orizaba, Pico de', 'San Martin', 'Chichon, El', 'Tacana',
+            'Santa Maria', 'Almolonga', 'Atitlan', 'Acatenango', 'Fuego',
+            'Pacaya', 'Tecuamburro', 'Santa Ana', 'Izalco', 'San Salvador',
+            'Ilopango', 'San Miguel', 'Conchaguita', 'Cosiguina',
+            'San Cristobal', 'Telica', 'Negro, Cerro', 'Pilas, Las',
+            'Momotombo', 'Apoyeque', 'Nejapa-Miraflores', 'Masaya',
+            'Concepcion', 'Rincon de la Vieja', 'Miravalles', 'Arenal', 'Poas',
+            'Barva', 'Irazu', 'Turrialba', 'Baru', 'Romeral', 'Bravo, Cerro',
+            'Ruiz, Nevado del', 'Tolima, Nevado del', 'Machin',
+            'Huila, Nevado del', 'Purace', 'Dona Juana', 'Galeras', 'Azufral',
+            'Cumbal', 'Negro de Mayasquer, Cerro', 'Soche', 'Chachimbiro',
+            'Cuicocha', 'Imbabura', 'Cayambe', 'Reventador', 'Pululagua',
+            'Guagua Pichincha', 'Atacazo', 'Chacana', 'Antisana', 'Aliso',
+            'Sumaco', 'Cotopaxi', 'Quilotoa', 'Chimborazo', 'Tungurahua',
+            'Sangay', 'Fernandina', 'Wolf', 'Darwin', 'Alcedo', 'Negra, Sierra',
+            'Azul, Cerro', 'Marchena', 'Andahua-Orcopampa', 'Huambo',
+            'Sabancaya', 'Misti, El', 'Ubinas', 'Huaynaputina', 'Ticsani',
+            'Yucamane', 'Taapaca', 'Parinacota', 'Guallatiri', 'Isluga',
+            'Irruputuncu', 'San Pedro', 'Lascar', 'Socompa', 'Llullaillaco',
+            'Ojos del Salado, Nevados', 'Robinson Crusoe', 'Tupungatito',
+            'San Jose', 'Maipo', 'Tinguiririca', 'Planchon-Peteroa',
+            'Descabezado Grande', 'Azul, Cerro', 'Longavi, Nevado de',
+            'Chillan, Nevados de', 'Tromen', 'Antuco', 'Copahue', 'Callaqui',
+            'Lonquimay', 'Llaima', 'Sollipulli', 'Caburgua-Huelemolle',
+            'Villarrica', 'Quetrupillan', 'Lanin', 'Huanquihue Group',
+            'Mocho-Choshuenco', 'Carran-Los Venados', 'Puyehue-Cordon Caulle',
+            'Antillanca Group', 'Puntiagudo-Cordon Cenizos', 'Osorno',
+            'Cayutue-La Vigueria', 'Calbuco', 'Huequi', 'Minchinmavida',
+            'Chaiten', 'Yanteles', 'Corcovado', 'Melimoyu', 'Mentolat', 'Maca',
+            'Hudson, Cerro', 'Arenales', 'Lautaro', 'Viedma', 'Aguilera',
+            'Reclus', 'Burney, Monte', 'Palei-Aike Volcanic Field', 'Fueguino',
+            'Saba', 'Quill, The', 'Liamuiga', 'Soufriere Hills',
+            'Soufriere Guadeloupe', 'Trois Pitons, Morne', 'Watt, Morne',
+            'Plat Pays, Morne', 'Pelee', 'Qualibou', 'Soufriere St. Vincent',
+            'Ljosufjoll', 'Reykjanes', 'Krisuvik', 'Brennisteinsfjoll',
+            'Hengill', 'Grimsnes', 'Hveravellir', 'Eyjafjallajokull', 'Katla',
+            'Torfajokull', 'Hekla', 'Grimsvotn', 'Bardarbunga', 'Kverkfjoll',
+            'Askja', 'Fremrinamur', 'Krafla', 'Oraefajokull', 'Jan Mayen',
+            'Flores', 'Fayal', 'Pico', 'San Jorge', 'Terceira', 'Sete Cidades',
+            'Picos Volcanic System', 'Agua de Pau', 'Furnas', 'Madeira',
+            'La Palma', 'Hierro', 'Tenerife', 'Gran Canaria', 'Lanzarote',
+            'Fogo', 'Tristan da Cunha', 'Nightingale Island', 'Buckle Island',
+            'Melbourne', 'Erebus', 'Takahe', 'Hudson Mountains',
+            'Deception Island', 'Penguin Island', 'Thule Islands',
+            'Bristol Island', 'Montagu Island', 'Michael', 'Candlemas Island',
+            'Zavodovski'],
+        volcanoLookup = {},
+
+        indexVolcanoes = function () {
+            // Create a quick lookup for known volcano names
+            var i, volcanoName;
+            for (i = 0; i < volcanoNames.length; i++) {
+                volcanoName = volcanoNames[i];
+                volcanoLookup[volcanoName] = true;
+            }
+        },
+
+        isKnownVolcano = function (volcanoName) {
+            // Whether the volcano is one that we should
+            // have AEP data for
+            return volcanoLookup[volcanoName] === true;
+        };
+
+    // var i, volcanoName;
+    // for (i = 0; i < volcanoNames.length; i++) {
+    //     volcanoName = volcanoNames[i];
+    //     volcanoLookup[volcanoName] = true;
+    // }
+
+    indexVolcanoes();
+
+    return {
+        isKnownVolcano: isKnownVolcano
+    };
+}());
+
 Ashfall.colorSchemes = (function ($) {
     /*
     MatPlotLib colours taken from https://bl.ocks.org/mbostock/b75883984a032ea0ba26
@@ -244,7 +436,8 @@ Ashfall.maps = (function ($, L, d3) {
         drawMap = function (mapId, colourScaleId, dataDetailsId, countries, threshold, colourScheme) {
             // country = country[0];
             // var csvUrl = "data/aep_thresholds_" + country + ".csv",
-            var colourScale;
+            var isKnownVolcano = Ashfall.volcanoes.isKnownVolcano,
+                colourScale;
 
             // Not ideal keeping one copy of map, but trouble removing
             // previous Leaflet map (Leaflet decorates html element)
@@ -267,7 +460,6 @@ Ashfall.maps = (function ($, L, d3) {
 
             $.when.apply($, promises).then(
                 function () {
-                    console.log('All URLs fetched.');
                     // Turn the CSV data into D3 data
                     var data = [],
                         tmpData;
@@ -322,6 +514,41 @@ Ashfall.maps = (function ($, L, d3) {
 
                     // Add some text details about dataa
                     drawDataDetails(dataDetailsId, filteredData, threshold);
+
+                    var volcanoLayer = L.geoJson(null, {
+                        pointToLayer: function (data, latlng) {
+                            // return L.circleMarker(latlng, {style: volcanoStyle});
+                            return L.shapeMarker(latlng, {
+                                fillColor: "#ff0000",
+                                color: "#ff0000",
+                                shape: "triangle",
+                                radius: 10
+                            });
+                        },
+                        onEachFeature: function (feature, layer) {
+                            if (feature.properties && feature.properties.name) {
+                                layer.bindPopup(feature.properties.name);
+                            }
+                        },
+                        filter: function (feature, layer) {
+                            return isKnownVolcano(feature.properties.name);
+                        }
+                    });
+
+                    // var volcanoStyle = { color: '#f00' };
+                    // var volcanoCircleLayer = L.geoJson(null, {
+                    //     pointToLayer: function (data, latlng) {
+                    //         return L.circleMarker(latlng, {style: volcanoStyle});
+                    //     },
+                    //     onEachFeature: function (feature, layer) {
+                    //         if (feature.properties && feature.properties.name) {
+                    //             layer.bindPopup(feature.properties.name);
+                    //         }
+                    //     } 
+                    // });
+
+                    omnivore.kml("data/volcanoes/GVPWorldVolcanoes-List.kml", null, volcanoLayer).addTo(map);
+                    // omnivore.kml("data/volcanoes/GVPWorldVolcanoes-List.kml", null, volcanoCircleLayer).addTo(map);
                 });
 
             /*
