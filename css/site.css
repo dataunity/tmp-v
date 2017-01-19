@@ -13,12 +13,17 @@ select {
 /* Map styling */
 
 .map {
-    width: 600px;
+    width: 700px;
     height: 400px;
 }
 
+.color-legend {
+    width: 200px;
+    float: left;
+}
+
 .map-option {
-    padding-right: 10px;
+    /*padding-right: 10px;*/
 }
 
 .colorscale {

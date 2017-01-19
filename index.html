@@ -24,21 +24,23 @@
 <h1>AEP</h1>
 <div class="choices-row">
     <span class="choices-title">Country: <br><small>(ctrl click to select more than one country)</small></span>
-    <span class="map-option">
-        <select id="countries" multiple size="5" class="map-option">
-            <optgroup label="Africa">
-                <option value="sudan,uganda,southafrica" class="country-group">All Africa</option>
-                <option value="sudan" selected>Sudan</option>
-                <option value="uganda">Uganda</option>
-                <option value="southafrica">South Africa</option>
-            </optgroup>
+    <span>
+        <select id="countries" multiple size="5" class="map-option"></select>
+    </span>
+</div>
+<div class="choices-row">
+    <span class="choices-title">Display:</span>
+    <span>
+        <select id="measure" class="map-option">
+            <option value="aep">Average Exceedance Probability (AEP)</option>
+            <option value="ari">Average Recurrence Interval (ARI)</option>
         </select>
     </span>
 </div>
 <div class="choices-row">
     <span class="choices-title">Threshold:</span>
-    <span class="map-option">
-        <select id="threshold">
+    <span>
+        <select id="threshold" class="map-option">
             <option value="0.1">0.1</option>
             <option value="1">1.0</option>
             <option value="10">10.0</option>
@@ -50,25 +52,29 @@
 </div>
 <div class="choices-row">
     <span class="choices-title">Colour scheme:</span>
-    <span class="map-option">
-        <select id="colourscheme">
-            <option value="hot">MatPlotLib Hot</option>
-            <option value="viridis">MatPlotLib Viridis</option>
+    <span>
+        <select id="colourscheme" class="map-option">
+            <option value="hot_r">MatPlotLib Hot (reversed)</option>
+            <!-- <option value="viridis">MatPlotLib Viridis</option> -->
             <option value="jet">MatPlotLib Jet</option>
-            <option value="magma">MatPlotLib Magma</option>
-            <option value="inferno">MatPlotLib Inferno</option>
-            <option value="plasma">MatPlotLib Plasma</option>
+            <!-- <option value="magma">MatPlotLib Magma</option> -->
+            <!-- <option value="inferno">MatPlotLib Inferno</option> -->
+            <!-- <option value="plasma">MatPlotLib Plasma</option> -->
         </select>
     </span>
 </div>
 <div id="map" class="map left"></div>
+<div id="color-bar" class="color-legend">
+    <img id="color-bar-img">
+</div>
 <div id="color-scale" class="colorscale"></div>
 <div id="data-details" class="data-text"></div>
 
 <script>
     $(document).ready(function () {
+
+        // Get the selected countries as an array
         function getCountriesSelection () {
-            // Gets the selected countries as an array
             var countries = d3.set();
             // Choices list can have single countries,
             // or comma separated lists of countries
@@ -82,29 +88,80 @@
             return countries.values();
         }
 
-        var defaultCountries = getCountriesSelection(),
-            defaultThreshold = parseFloat($("#threshold").val()),
-            defaultColourScheme = $("#colourscheme").val();
-
-        function drawMap (countries, threshold, colourScheme) {
-            console.log(countries, threshold, colourScheme);
-            Ashfall.maps.drawMap('map', 'color-scale', 'data-details', countries, threshold, colourScheme);
+        function drawMap (countries, measure, threshold, colourScheme, countryNameLookup) {
+            console.log(countries, measure, threshold, colourScheme);
+            Ashfall.maps.drawMap('map', 'color-scale', 'data-details', 
+                countries, measure, threshold,
+                colourScheme, countryNameLookup);
         }
 
-        function redrawMap () {
+        function drawColorBar (measure, colourScheme) {
+            var imgUrl = "raster/colorbar_" + measure + "_" + colourScheme + ".png";
+            $("#color-bar-img")
+                .attr('src', imgUrl);
+        }
+
+        function redrawMap (countryNameLookup) {
             var countries = getCountriesSelection(),
+                measure = $("#measure").val(),
                 threshold = parseFloat($("#threshold").val()),
                 colourScheme = $("#colourscheme").val();
-            drawMap(countries, threshold, colourScheme);
+            drawMap(countries, measure, threshold, colourScheme, countryNameLookup);
+            drawColorBar(measure, colourScheme);
         }
 
-        // Set up event handlers for changes to selections
-        $(".map-option").on("change", function( event ) {
-            redrawMap();
-        });
+        // Set up drop down menus
+        $.getJSON("data/countries.json")
+            .then(function (data) {
+                // Set up country drop down
+                var countrySelect = $('#countries'),
+                    countryNameLookup = {}; // Lookup of country file name to country name
 
-        // Draw the default map (when page first loads)
-        drawMap(defaultCountries, defaultThreshold, defaultColourScheme);
+                // Add Option Group for continent
+                $.each(data, function(continentName, countries) {   
+                    var optGroup = $("<optgroup></optgroup>")
+                        .attr("label", continentName);
+
+                    // Add one option for all countries in continent
+                    var countriesList = $.map(countries, function (c) {return c.disk_name});
+                    optGroup
+                        .append($("<option></option>")
+                            .addClass("country-group")
+                            .attr("value", countriesList.join(","))
+                            .text("All " + continentName));
+
+                    // Add countries
+                    $.each(countries, function(i, country) {   
+                        optGroup
+                            .append($("<option></option>")
+                                .attr("value", country.disk_name)
+                                .text(country.name));
+
+                        // Remember country disk name to friendly name
+                        countryNameLookup[country.disk_name] = country.name;
+                    });
+
+                    countrySelect.append(optGroup);
+                });
+
+                // Draw the default map (when page first loads)
+                $("#countries").val("sudan");
+
+                // Set up event handlers for changes to selections
+                // $("#colourscheme")
+                // $("#countries").on("change", function (event) {
+                //     console.log("Redrawing map");
+                //     // console.log(event);
+                //     redrawMap();
+                // });
+                $(".map-option").on("change", function (event) {
+                    // console.log("Redrawing map");
+                    // console.log(event);
+                    redrawMap(countryNameLookup);
+                });
+
+                redrawMap(countryNameLookup);
+            });
     });
     
 </script>

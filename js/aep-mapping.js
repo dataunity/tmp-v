@@ -179,12 +179,6 @@ Ashfall.volcanoes = (function () {
             return volcanoLookup[volcanoName] === true;
         };
 
-    // var i, volcanoName;
-    // for (i = 0; i < volcanoNames.length; i++) {
-    //     volcanoName = volcanoNames[i];
-    //     volcanoLookup[volcanoName] = true;
-    // }
-
     indexVolcanoes();
 
     return {
@@ -192,6 +186,7 @@ Ashfall.volcanoes = (function () {
     };
 }());
 
+// DEPRECATED
 Ashfall.colorSchemes = (function ($) {
     /*
     MatPlotLib colours taken from https://bl.ocks.org/mbostock/b75883984a032ea0ba26
@@ -217,7 +212,7 @@ Ashfall.colorSchemes = (function ($) {
         infernoStr = "000004,010005,010106,010108,02010a,02020c,02020e,030210,040312,040314,050417,060419,07051b,08051d,09061f,0a0722,0b0724,0c0826,0d0829,0e092b,10092d,110a30,120a32,140b34,150b37,160b39,180c3c,190c3e,1b0c41,1c0c43,1e0c45,1f0c48,210c4a,230c4c,240c4f,260c51,280b53,290b55,2b0b57,2d0b59,2f0a5b,310a5c,320a5e,340a5f,360961,380962,390963,3b0964,3d0965,3e0966,400a67,420a68,440a68,450a69,470b6a,490b6a,4a0c6b,4c0c6b,4d0d6c,4f0d6c,510e6c,520e6d,540f6d,550f6d,57106e,59106e,5a116e,5c126e,5d126e,5f136e,61136e,62146e,64156e,65156e,67166e,69166e,6a176e,6c186e,6d186e,6f196e,71196e,721a6e,741a6e,751b6e,771c6d,781c6d,7a1d6d,7c1d6d,7d1e6d,7f1e6c,801f6c,82206c,84206b,85216b,87216b,88226a,8a226a,8c2369,8d2369,8f2469,902568,922568,932667,952667,972766,982766,9a2865,9b2964,9d2964,9f2a63,a02a63,a22b62,a32c61,a52c60,a62d60,a82e5f,a92e5e,ab2f5e,ad305d,ae305c,b0315b,b1325a,b3325a,b43359,b63458,b73557,b93556,ba3655,bc3754,bd3853,bf3952,c03a51,c13a50,c33b4f,c43c4e,c63d4d,c73e4c,c83f4b,ca404a,cb4149,cc4248,ce4347,cf4446,d04545,d24644,d34743,d44842,d54a41,d74b3f,d84c3e,d94d3d,da4e3c,db503b,dd513a,de5238,df5337,e05536,e15635,e25734,e35933,e45a31,e55c30,e65d2f,e75e2e,e8602d,e9612b,ea632a,eb6429,eb6628,ec6726,ed6925,ee6a24,ef6c23,ef6e21,f06f20,f1711f,f1731d,f2741c,f3761b,f37819,f47918,f57b17,f57d15,f67e14,f68013,f78212,f78410,f8850f,f8870e,f8890c,f98b0b,f98c0a,f98e09,fa9008,fa9207,fa9407,fb9606,fb9706,fb9906,fb9b06,fb9d07,fc9f07,fca108,fca309,fca50a,fca60c,fca80d,fcaa0f,fcac11,fcae12,fcb014,fcb216,fcb418,fbb61a,fbb81d,fbba1f,fbbc21,fbbe23,fac026,fac228,fac42a,fac62d,f9c72f,f9c932,f9cb35,f8cd37,f8cf3a,f7d13d,f7d340,f6d543,f6d746,f5d949,f5db4c,f4dd4f,f4df53,f4e156,f3e35a,f3e55d,f2e661,f2e865,f2ea69,f1ec6d,f1ed71,f1ef75,f1f179,f2f27d,f2f482,f3f586,f3f68a,f4f88e,f5f992,f6fa96,f8fb9a,f9fc9d,fafda1,fcffa4",
         plasmaStr = "0d0887,100788,130789,16078a,19068c,1b068d,1d068e,20068f,220690,240691,260591,280592,2a0593,2c0594,2e0595,2f0596,310597,330597,350498,370499,38049a,3a049a,3c049b,3e049c,3f049c,41049d,43039e,44039e,46039f,48039f,4903a0,4b03a1,4c02a1,4e02a2,5002a2,5102a3,5302a3,5502a4,5601a4,5801a4,5901a5,5b01a5,5c01a6,5e01a6,6001a6,6100a7,6300a7,6400a7,6600a7,6700a8,6900a8,6a00a8,6c00a8,6e00a8,6f00a8,7100a8,7201a8,7401a8,7501a8,7701a8,7801a8,7a02a8,7b02a8,7d03a8,7e03a8,8004a8,8104a7,8305a7,8405a7,8606a6,8707a6,8808a6,8a09a5,8b0aa5,8d0ba5,8e0ca4,8f0da4,910ea3,920fa3,9410a2,9511a1,9613a1,9814a0,99159f,9a169f,9c179e,9d189d,9e199d,a01a9c,a11b9b,a21d9a,a31e9a,a51f99,a62098,a72197,a82296,aa2395,ab2494,ac2694,ad2793,ae2892,b02991,b12a90,b22b8f,b32c8e,b42e8d,b52f8c,b6308b,b7318a,b83289,ba3388,bb3488,bc3587,bd3786,be3885,bf3984,c03a83,c13b82,c23c81,c33d80,c43e7f,c5407e,c6417d,c7427c,c8437b,c9447a,ca457a,cb4679,cc4778,cc4977,cd4a76,ce4b75,cf4c74,d04d73,d14e72,d24f71,d35171,d45270,d5536f,d5546e,d6556d,d7566c,d8576b,d9586a,da5a6a,da5b69,db5c68,dc5d67,dd5e66,de5f65,de6164,df6263,e06363,e16462,e26561,e26660,e3685f,e4695e,e56a5d,e56b5d,e66c5c,e76e5b,e76f5a,e87059,e97158,e97257,ea7457,eb7556,eb7655,ec7754,ed7953,ed7a52,ee7b51,ef7c51,ef7e50,f07f4f,f0804e,f1814d,f1834c,f2844b,f3854b,f3874a,f48849,f48948,f58b47,f58c46,f68d45,f68f44,f79044,f79143,f79342,f89441,f89540,f9973f,f9983e,f99a3e,fa9b3d,fa9c3c,fa9e3b,fb9f3a,fba139,fba238,fca338,fca537,fca636,fca835,fca934,fdab33,fdac33,fdae32,fdaf31,fdb130,fdb22f,fdb42f,fdb52e,feb72d,feb82c,feba2c,febb2b,febd2a,febe2a,fec029,fdc229,fdc328,fdc527,fdc627,fdc827,fdca26,fdcb26,fccd25,fcce25,fcd025,fcd225,fbd324,fbd524,fbd724,fad824,fada24,f9dc24,f9dd25,f8df25,f8e125,f7e225,f7e425,f6e626,f6e826,f5e926,f5eb27,f4ed27,f3ee27,f3f027,f2f227,f1f426,f1f525,f0f724,f0f921",
         viridisStr = "440154,440256,450457,450559,46075a,46085c,460a5d,460b5e,470d60,470e61,471063,471164,471365,481467,481668,481769,48186a,481a6c,481b6d,481c6e,481d6f,481f70,482071,482173,482374,482475,482576,482677,482878,482979,472a7a,472c7a,472d7b,472e7c,472f7d,46307e,46327e,46337f,463480,453581,453781,453882,443983,443a83,443b84,433d84,433e85,423f85,424086,424186,414287,414487,404588,404688,3f4788,3f4889,3e4989,3e4a89,3e4c8a,3d4d8a,3d4e8a,3c4f8a,3c508b,3b518b,3b528b,3a538b,3a548c,39558c,39568c,38588c,38598c,375a8c,375b8d,365c8d,365d8d,355e8d,355f8d,34608d,34618d,33628d,33638d,32648e,32658e,31668e,31678e,31688e,30698e,306a8e,2f6b8e,2f6c8e,2e6d8e,2e6e8e,2e6f8e,2d708e,2d718e,2c718e,2c728e,2c738e,2b748e,2b758e,2a768e,2a778e,2a788e,29798e,297a8e,297b8e,287c8e,287d8e,277e8e,277f8e,27808e,26818e,26828e,26828e,25838e,25848e,25858e,24868e,24878e,23888e,23898e,238a8d,228b8d,228c8d,228d8d,218e8d,218f8d,21908d,21918c,20928c,20928c,20938c,1f948c,1f958b,1f968b,1f978b,1f988b,1f998a,1f9a8a,1e9b8a,1e9c89,1e9d89,1f9e89,1f9f88,1fa088,1fa188,1fa187,1fa287,20a386,20a486,21a585,21a685,22a785,22a884,23a983,24aa83,25ab82,25ac82,26ad81,27ad81,28ae80,29af7f,2ab07f,2cb17e,2db27d,2eb37c,2fb47c,31b57b,32b67a,34b679,35b779,37b878,38b977,3aba76,3bbb75,3dbc74,3fbc73,40bd72,42be71,44bf70,46c06f,48c16e,4ac16d,4cc26c,4ec36b,50c46a,52c569,54c568,56c667,58c765,5ac864,5cc863,5ec962,60ca60,63cb5f,65cb5e,67cc5c,69cd5b,6ccd5a,6ece58,70cf57,73d056,75d054,77d153,7ad151,7cd250,7fd34e,81d34d,84d44b,86d549,89d548,8bd646,8ed645,90d743,93d741,95d840,98d83e,9bd93c,9dd93b,a0da39,a2da37,a5db36,a8db34,aadc32,addc30,b0dd2f,b2dd2d,b5de2b,b8de29,bade28,bddf26,c0df25,c2df23,c5e021,c8e020,cae11f,cde11d,d0e11c,d2e21b,d5e21a,d8e219,dae319,dde318,dfe318,e2e418,e5e419,e7e419,eae51a,ece51b,efe51c,f1e51d,f4e61e,f6e620,f8e621,fbe723,fde725",
-        hotStr = "ffffff,fffffb,fffff7,fffff3,ffffef,ffffeb,ffffe7,ffffe3,ffffdf,ffffdc,ffffd8,ffffd4,ffffd0,ffffcc,ffffc8,ffffc4,ffffc0,ffffbc,ffffb8,ffffb4,ffffb0,ffffac,ffffa8,ffffa4,ffffa0,ffff9d,ffff99,ffff95,ffff91,ffff8d,ffff89,ffff85,ffff81,ffff7d,ffff79,ffff75,ffff71,ffff6d,ffff69,ffff65,ffff61,ffff5e,ffff5a,ffff56,ffff52,ffff4e,ffff4a,ffff46,ffff42,ffff3e,ffff3a,ffff36,ffff32,ffff2e,ffff2a,ffff26,ffff22,ffff1f,ffff1b,ffff17,ffff13,ffff0f,ffff0b,ffff07,ffff03,fffe00,fffc00,fff900,fff600,fff400,fff100,ffef00,ffec00,ffe900,ffe700,ffe400,ffe100,ffdf00,ffdc00,ffda00,ffd700,ffd400,ffd200,ffcf00,ffcc00,ffca00,ffc700,ffc500,ffc200,ffbf00,ffbd00,ffba00,ffb700,ffb500,ffb200,ffb000,ffad00,ffaa00,ffa800,ffa500,ffa200,ffa000,ff9d00,ff9b00,ff9800,ff9500,ff9300,ff9000,ff8e00,ff8b00,ff8800,ff8600,ff8300,ff8000,ff7e00,ff7b00,ff7900,ff7600,ff7300,ff7100,ff6e00,ff6b00,ff6900,ff6600,ff6400,ff6100,ff5e00,ff5c00,ff5900,ff5600,ff5400,ff5100,ff4f00,ff4c00,ff4900,ff4700,ff4400,ff4100,ff3f00,ff3c00,ff3a00,ff3700,ff3400,ff3200,ff2f00,ff2c00,ff2a00,ff2700,ff2500,ff2200,ff1f00,ff1d00,ff1a00,ff1700,ff1500,ff1200,ff1000,ff0d00,ff0a00,ff0800,ff0500,ff0200,ff0000,fc0000,f90000,f70000,f40000,f20000,ef0000,ec0000,ea0000,e70000,e40000,e20000,df0000,dd0000,da0000,d70000,d50000,d20000,cf0000,cd0000,ca0000,c80000,c50000,c20000,c00000,bd0000,ba0000,b80000,b50000,b30000,b00000,ad0000,ab0000,a80000,a50000,a30000,a00000,9e0000,9b0000,980000,960000,930000,900000,8e0000,8b0000,890000,860000,830000,810000,7e0000,7b0000,790000,760000,740000,710000,6e0000,6c0000,690000,660000,640000,610000,5f0000,5c0000,590000,570000,540000,510000,4f0000,4c0000,4a0000,470000,440000,420000,3f0000,3c0000,3a0000,370000,350000,320000,2f0000,2d0000,2a0000,270000,250000,220000,200000,1d0000,1a0000,180000,150000,120000,100000,0d0000,0b0000",
+        hotReversedStr = "ffffff,fffffb,fffff7,fffff3,ffffef,ffffeb,ffffe7,ffffe3,ffffdf,ffffdc,ffffd8,ffffd4,ffffd0,ffffcc,ffffc8,ffffc4,ffffc0,ffffbc,ffffb8,ffffb4,ffffb0,ffffac,ffffa8,ffffa4,ffffa0,ffff9d,ffff99,ffff95,ffff91,ffff8d,ffff89,ffff85,ffff81,ffff7d,ffff79,ffff75,ffff71,ffff6d,ffff69,ffff65,ffff61,ffff5e,ffff5a,ffff56,ffff52,ffff4e,ffff4a,ffff46,ffff42,ffff3e,ffff3a,ffff36,ffff32,ffff2e,ffff2a,ffff26,ffff22,ffff1f,ffff1b,ffff17,ffff13,ffff0f,ffff0b,ffff07,ffff03,fffe00,fffc00,fff900,fff600,fff400,fff100,ffef00,ffec00,ffe900,ffe700,ffe400,ffe100,ffdf00,ffdc00,ffda00,ffd700,ffd400,ffd200,ffcf00,ffcc00,ffca00,ffc700,ffc500,ffc200,ffbf00,ffbd00,ffba00,ffb700,ffb500,ffb200,ffb000,ffad00,ffaa00,ffa800,ffa500,ffa200,ffa000,ff9d00,ff9b00,ff9800,ff9500,ff9300,ff9000,ff8e00,ff8b00,ff8800,ff8600,ff8300,ff8000,ff7e00,ff7b00,ff7900,ff7600,ff7300,ff7100,ff6e00,ff6b00,ff6900,ff6600,ff6400,ff6100,ff5e00,ff5c00,ff5900,ff5600,ff5400,ff5100,ff4f00,ff4c00,ff4900,ff4700,ff4400,ff4100,ff3f00,ff3c00,ff3a00,ff3700,ff3400,ff3200,ff2f00,ff2c00,ff2a00,ff2700,ff2500,ff2200,ff1f00,ff1d00,ff1a00,ff1700,ff1500,ff1200,ff1000,ff0d00,ff0a00,ff0800,ff0500,ff0200,ff0000,fc0000,f90000,f70000,f40000,f20000,ef0000,ec0000,ea0000,e70000,e40000,e20000,df0000,dd0000,da0000,d70000,d50000,d20000,cf0000,cd0000,ca0000,c80000,c50000,c20000,c00000,bd0000,ba0000,b80000,b50000,b30000,b00000,ad0000,ab0000,a80000,a50000,a30000,a00000,9e0000,9b0000,980000,960000,930000,900000,8e0000,8b0000,890000,860000,830000,810000,7e0000,7b0000,790000,760000,740000,710000,6e0000,6c0000,690000,660000,640000,610000,5f0000,5c0000,590000,570000,540000,510000,4f0000,4c0000,4a0000,470000,440000,420000,3f0000,3c0000,3a0000,370000,350000,320000,2f0000,2d0000,2a0000,270000,250000,220000,200000,1d0000,1a0000,180000,150000,120000,100000,0d0000,0b0000",
         matPlotLibToHexArray = function (valsStr) {
             // Turns MatPlotLib colour string into array of hex colours
             return $.map(valsStr.split(","), function (item) {
@@ -230,11 +225,11 @@ Ashfall.colorSchemes = (function ($) {
         inferno: matPlotLibToHexArray(infernoStr),
         plasma: matPlotLibToHexArray(plasmaStr),
         viridis: matPlotLibToHexArray(viridisStr),
-        hot: matPlotLibToHexArray(hotStr)
+        hot_r: matPlotLibToHexArray(hotReversedStr)
     };
 }($));
 
-Ashfall.maps = (function ($, L, d3) {
+Ashfall.maps = (function ($, L, d3, omnivore) {
     var colorSchemes = Ashfall.colorSchemes,
         addTileLayer = function (map) {
             var mapboxAccessToken = "pk.eyJ1Ijoia2V2ayIsImEiOiJjaXZjOXh6aGMwMDM0MnltcXRyc2FvdDFpIn0.i0ZaZBy5NkiSe6_UOEFupg";
@@ -247,42 +242,43 @@ Ashfall.maps = (function ($, L, d3) {
                 id: 'mapbox.streets'
             }).addTo(map);
         },
+        // DEPRECATED
         processCsvRow = function (d) {
             // Process raw D3 csv row into correct datatypes
             return {
                 threshold: +d.threshold,
                 aep: +d.aep,
+                ari: +d.ari,
                 longitude: +d.longitude,
                 latitude: +d.latitude,
                 hit: +d.hit
             };
         },
-        createCircles = function (data, colourScale, normScale) {
+        // DEPRECATED
+        createCircles = function (data, measure, colourScale, normScale) {
             var circles = [],
                 colour, i, row, circle;
             
             for (i = 0; i < data.length; i++) {
                 row = data[i];
-                colour = colourScale(normScale(row.aep));
+                colour = colourScale(normScale(row[measure]));
                 circle = L.circle([row.latitude, row.longitude], 500, {
                     color: colour,
                     fillColor: colour,
                     fillOpacity: 1.0
                 });
-                circle.bindPopup('AEP: ' + row.aep + '<br>Latitude: ' + row.latitude + '<br>Longitude:' + row.longitude);
+                circle.bindPopup(measure.toUpperCase() + ': ' + row[measure] + '<br>Latitude: ' + row.latitude + '<br>Longitude:' + row.longitude);
                 circles.push(circle);
             }
             return circles;
         },
-        createNormalisedColourScale = function (aep, colourScheme) {
-            // Creates a normalised colour scale (domain 0 to 1)
-            // var min = d3.min(aep),
-            //     max = d3.max(aep),
+        // DEPRECATED
+        createNormalisedColourScale = function (colourSchemeName) {
+            var colours = [];
+            switch (colourSchemeName) {
                 // These colours represent the 'jet' colour scheme in matplotlib
                 // however there's problems with this colour scale, e.g see:
                 // https://jakevdp.github.io/blog/2014/10/16/how-bad-is-your-colormap/
-            var colours = [];
-            switch (colourScheme) {
                 case "jet":
                     colours = ['#000080', '#000084', '#000089', '#00008d', '#000092', '#000096', '#00009b', 
                         '#00009f', '#0000a4', '#0000a8', '#0000ad', '#0000b2', '#0000b6', '#0000bb', '#0000bf', 
@@ -329,11 +325,11 @@ Ashfall.maps = (function ($, L, d3) {
                 case "viridis":
                     colours = colorSchemes.viridis;
                     break;
-                case "hot":
-                    colours = colorSchemes.hot;
+                case "hot_r":
+                    colours = colorSchemes.hot_r;
                     break;
                 default:
-                    throw new Error("Unrecognised colour scheme " + colourScheme);
+                    throw new Error("Unrecognised colour scheme " + colourSchemeName);
             }
 
             var colourScale = d3.scaleQuantize()
@@ -342,11 +338,12 @@ Ashfall.maps = (function ($, L, d3) {
 
             return colourScale;
         },
-        createLogNormScale = function (aep) {
+        // DEPRECATED
+        createLogNormScale = function (values) {
             // Creates a normalised scale which turns log of
             // value into range 0 to 1
-            var min = d3.min(aep),
-                max = d3.max(aep);
+            var min = d3.min(values),
+                max = d3.max(values);
 
             var scale = d3.scaleLog()
                 .domain([min, max])
@@ -354,9 +351,10 @@ Ashfall.maps = (function ($, L, d3) {
 
             return scale;
         },
+        // DEPRECATED
         extractArray = function (data, propertyName) {
             // Extracts an array of values (a 'column') from
-            // d3 style rows (list of objects)
+            // d3 style rows (i.e. an array of JavaScript Objects)
             var vals = [],
                 i;
             for (i = 0; i < data.length; i++) {
@@ -364,6 +362,19 @@ Ashfall.maps = (function ($, L, d3) {
             }
             return vals;
         },
+        // DEPRECATED
+        extractMapBounds = function (data) {
+            // Extracts the lat/long bounds from the data
+            var maxLat = d3.max(data, function (d) {return d.latitude; }),
+                minLat = d3.min(data, function (d) {return d.latitude; }),
+                maxLong = d3.max(data, function (d) {return d.longitude; }),
+                minLong = d3.min(data, function (d) {return d.longitude; }),
+                southWest = L.latLng(minLat, minLong),
+                northEast = L.latLng(maxLat, maxLong),
+                bounds = L.latLngBounds(southWest, northEast);
+            return bounds;
+        },
+        // DEPRECATED
         drawColourLegend = function (colourScaleId, colorScale, valueScale) {
             var colourBarWidth = 30,
                 colourBarHeight = 400,
@@ -425,6 +436,7 @@ Ashfall.maps = (function ($, L, d3) {
                 .append("g")
                     .call(colourAxis);
         },
+        // DEPRECATED
         drawDataDetails = function (dataDetailsId, data, threshold) {
             // Add some details to the page about the data
             var dataText = "";
@@ -432,12 +444,97 @@ Ashfall.maps = (function ($, L, d3) {
             dataText += " for threshold " + threshold;
             $("#" + dataDetailsId).html(dataText);
         },
-        map = null,
-        drawMap = function (mapId, colourScaleId, dataDetailsId, countries, threshold, colourScheme) {
-            // country = country[0];
-            // var csvUrl = "data/aep_thresholds_" + country + ".csv",
+        drawDataInfo = function (dataDetailsId, countOfPoints, threshold) {
+            // Add some details to the page about the data
+            var dataText = (typeof countOfPoints === "undefined") ? "unknown" : countOfPoints;
+            dataText += " points for threshold " + threshold;
+            $("#" + dataDetailsId).html(dataText);
+        },
+        drawVolcanoIcons = function (map) {
             var isKnownVolcano = Ashfall.volcanoes.isKnownVolcano,
-                colourScale;
+                volcIcon = L.icon({
+                    iconUrl: 'images/volcano-icon.png',
+                    iconSize:     [20, 18],
+                    iconAnchor:   [10, 9]
+                    // iconSize:     [30, 26], // size of the icon
+                    // iconAnchor:   [15, 13]  // point of the icon which will correspond to marker's location
+                }),
+                volcanoLayer = L.geoJson(null, {
+                    pointToLayer: function (data, latlng) {
+                        // Show a triangle shape
+                        // return L.shapeMarker(latlng, {
+                        //     fillColor: "#ff0000",
+                        //     color: "#ff0000",
+                        //     shape: "triangle",
+                        //     radius: 10
+                        // });
+
+                        return L.marker(latlng, {icon: volcIcon});
+                    },
+                    onEachFeature: function (feature, layer) {
+                        // Add popup box with volcano name
+                        if (feature.properties && feature.properties.name) {
+                            layer.bindPopup(feature.properties.name);
+                        }
+                    },
+                    filter: function (feature, layer) {
+                        // Only show volcanoes with AEP calcs
+                        return isKnownVolcano(feature.properties.name);
+                    }
+                });
+
+            // Circle icons for volcanoes
+            // var volcanoStyle = { color: '#f00' };
+            // var volcanoCircleLayer = L.geoJson(null, {
+            //     pointToLayer: function (data, latlng) {
+            //         return L.circleMarker(latlng, {style: volcanoStyle});
+            //     },
+            //     onEachFeature: function (feature, layer) {
+            //         if (feature.properties && feature.properties.name) {
+            //             layer.bindPopup(feature.properties.name);
+            //         }
+            //     } 
+            // });
+            // omnivore.kml("data/volcanoes/GVPWorldVolcanoes-List.kml", null, volcanoCircleLayer).addTo(map);
+
+            omnivore.kml("data/volcanoes/GVPWorldVolcanoes-List.kml", null, volcanoLayer).addTo(map);
+        },
+        // DEPRECATED
+        extendBounds = function (bounds, llcrnrlat, urcrnrlat, llcrnrlon, urcrnrlon) {
+            // Extends the bounds of the bounding box to fit new co-ords
+            if (typeof bounds.llcrnrlat === "undefined" && !isNaN(llcrnrlat)) {
+                bounds.llcrnrlat = llcrnrlat;
+            }
+            if (typeof bounds.urcrnrlat === "undefined" && !isNaN(urcrnrlat)) {
+                bounds.urcrnrlat = urcrnrlat;
+            }
+            if (typeof bounds.llcrnrlon === "undefined" && !isNaN(llcrnrlon)) {
+                bounds.llcrnrlon = llcrnrlon;
+            }
+            if (typeof bounds.urcrnrlon === "undefined" && !isNaN(urcrnrlon)) {
+                bounds.urcrnrlon = urcrnrlon;
+            }
+
+            if (!isNaN(llcrnrlat) && llcrnrlat < bounds.llcrnrlat) {
+                bounds.llcrnrlat = llcrnrlat;
+            }
+            if (!isNaN(urcrnrlat) && urcrnrlat > bounds.urcrnrlat) {
+                bounds.urcrnrlat = urcrnrlat;
+            }
+            if (!isNaN(llcrnrlon) && llcrnrlon < bounds.llcrnrlon) {
+                bounds.llcrnrlon = llcrnrlon;
+            }
+            if (!isNaN(urcrnrlon) && urcrnrlon > bounds.urcrnrlon) {
+                bounds.urcrnrlon = urcrnrlon;
+            }
+        },
+        map = null,
+        drawMap = function (mapId, colourScaleId, dataDetailsId, countries, measure, threshold, colourScheme, countryNameLoopup) {
+            var colourScale;
+
+            if (measure !== "aep" && measure !== "ari") {
+                throw new Error("The measure must be AEP or ARI");
+            }
 
             // Not ideal keeping one copy of map, but trouble removing
             // previous Leaflet map (Leaflet decorates html element)
@@ -448,10 +545,121 @@ Ashfall.maps = (function ($, L, d3) {
                 console.log("Not removing map");
             }
 
-            map = L.map(mapId);//.setView([51.505, -0.09], 13);
+            map = L.map(mapId);
             addTileLayer(map);
 
-            var promises = [];
+            // Use promises to load country data in parallel
+            var countryPromises = [];
+            $.each(countries, function (i, country) {
+                var deferred = $.Deferred(),
+                    imageUrl = 'raster/' + country + '_threshold_' + threshold.toFixed(1) + '_' + colourScheme + '_' + measure + '.png',
+                    jsonUrl = 'raster/' + country + '.json';
+
+                $.getJSON(jsonUrl)
+                    .then(function (data) {
+                        // Get map image bounds
+                        var southWestLat = data.bounds.south_west_lat,
+                            southWestLong = data.bounds.south_west_long,
+                            northEastLat = data.bounds.north_east_lat,
+                            northEastLong = data.bounds.north_east_long,
+                            imageBounds = [[southWestLat, southWestLong], [northEastLat, northEastLong]],
+                            countOfPoints = data.threshold_info[threshold.toFixed(1)].count_of_points;
+
+                        deferred.resolve({
+                            "country": country, 
+                            "imageUrl": imageUrl, 
+                            "imageBounds": imageBounds,
+                            "countOfPoints": countOfPoints});
+                    })
+                    .fail (function (error) {
+                        deferred.reject(error);
+                    });
+
+                countryPromises.push(deferred.promise());
+            });
+
+            // When all country info is loaded, draw the map
+            $.when.apply($, countryPromises)
+                .then(function (data) {
+                    var mapLayers = {},
+                        mapBounds = null,
+                        dataDetails = "",
+                        numArgs = arguments.length;
+                     console.log(arguments);
+
+                    // Build layer for map
+                    $.each(arguments, function (i, countryData) {
+                        var country = countryData.country,
+                            imageUrl = countryData.imageUrl,
+                            imageBounds = countryData.imageBounds,
+                            mapLayer = L.imageOverlay(imageUrl, imageBounds),
+                            countOfPoints = countryData.countOfPoints,
+                            countryFriendlyName = countryNameLoopup[country] || country;
+
+                        // Show layer on map
+                        if (countOfPoints) {
+                            mapLayer.addTo(map);
+                            mapLayers[countryFriendlyName] = mapLayer;
+                        }
+
+                        // Remember max bounds
+                        if (i === 0) {
+                            mapBounds = L.latLngBounds(imageBounds);
+                        } else {
+                            mapBounds.extend(imageBounds);
+                        }
+
+                        // Remember number of points for each country
+                        dataDetails += countryFriendlyName + ": " + countOfPoints + " points";
+                        console.log(i + 1, arguments.length, numArgs);
+                        if (i + 1 < numArgs) {
+                            dataDetails += ", ";
+                        }
+                    });
+
+                    // Draw the map layers
+                    L.control.layers(null, mapLayers).addTo(map);
+                    if (mapBounds) {
+                        map.fitBounds(mapBounds);
+                    }
+
+                    // Draw the colour scale
+                    // drawColourLegend(colourScaleId, colourScale, valueScale);
+
+                    // Add some text details about data
+                    $("#" + dataDetailsId).html(dataDetails);
+                    // drawDataInfo(dataDetailsId, countOfPoints, threshold);
+                    // drawDataDetails(dataDetailsId, filteredData, threshold);
+
+                    // Draw the volcano icons
+                    drawVolcanoIcons(map);
+                });
+
+
+            /*
+
+            // $.each(countries, function (i, country) {
+            //     var imageUrl = 'raster/' + country + '_threshold_' + threshold.toFixed(1) + '_' + colourScheme + '_aep.png',
+            //         jsonUrl = 'raster/' + country + '.json';
+
+            //     $.getJSON(jsonUrl)
+            //         .then(function (data) {
+            //             // Get map image bounds
+            //             var llcrnrlat = data.llcrnrlat,
+            //                 urcrnrlat = data.urcrnrlat,
+            //                 llcrnrlon = data.llcrnrlon,
+            //                 urcrnrlon = data.urcrnrlon,
+            //                 imageBounds = [[llcrnrlat, llcrnrlon], [urcrnrlat, urcrnrlon]];
+
+            //             // Remember max bounds
+            //             extendBounds(mapBounds, llcrnrlat, urcrnrlat, llcrnrlon, urcrnrlon);
+
+            //             mapLayers[country] = L.imageOverlay(imageUrl, imageBounds).addTo(map);
+            //         });
+            // });
+
+            var promises = [],
+                mapLayers = {};
             $.each(countries, function (i, country) {
                 // Create promise to fetch data
                 var csvUrl = "data/aep_thresholds_" + country + ".csv";
@@ -460,14 +668,14 @@ Ashfall.maps = (function ($, L, d3) {
 
             $.when.apply($, promises).then(
                 function () {
-                    // Turn the CSV data into D3 data
+                    // Turn the CSV data into D3 ready data
                     var data = [],
                         tmpData;
-                    // Parse the data from CSV string
+                    // Parse the data from CSV strings and build up dataset
+                    // that accumulates data across all CSV files
                     if (promises.length === 1) {
                         tmpData = d3.csvParse(arguments[0], processCsvRow);
                         data = data.concat(tmpData);
-                        // data.push(tmpData);
                     } else {
                         for (var i = 0; i < arguments.length; i++) {
                             tmpData = d3.csvParse(arguments[i][0], processCsvRow);
@@ -483,109 +691,48 @@ Ashfall.maps = (function ($, L, d3) {
                 })
                 .then (function (data) {
                     var filteredData = data.filter(function (d) { return d.threshold === threshold}),
-                        aep = extractArray(filteredData, "aep"),
-                        colourScale = createNormalisedColourScale(aep, colourScheme),
-                        valueScale = createLogNormScale(aep),
-                        circles = createCircles(filteredData, colourScale, valueScale);
+                        colourScale = createNormalisedColourScale(colourScheme),
+                        values = extractArray(filteredData, measure),
+                        valueScale = createLogNormScale(values),
+                        circles = createCircles(filteredData, measure, colourScale, valueScale);
                         features = L.featureGroup(circles),
-                        maxLat = d3.max(data, function (d) {return d.latitude; }),
-                        minLat = d3.min(data, function (d) {return d.latitude; }),
-                        maxLong = d3.max(data, function (d) {return d.longitude; }),
-                        minLong = d3.min(data, function (d) {return d.longitude; }),
-                        southWest = L.latLng(minLat, minLong),
-                        northEast = L.latLng(maxLat, maxLong),
-                        bounds = L.latLngBounds(southWest, northEast);
+                        bounds = extractMapBounds(data);
                     
-                    features.addTo(map);
-                    // console.log(filteredData);
+                    // features.addTo(map);
 
                     // Zoom in on features
                     // Note: centre map on unfiltered data, as filtered data is often empty
                     if (countries.length > 1) {
                         bounds = bounds.pad(0.01);
                         // map.fitBounds(bounds, { padding: [2,2] });
-                    } else {
-                        // map.fitBounds(bounds);
                     }
                     map.fitBounds(bounds);
 
                     // Draw the colour scale
                     drawColourLegend(colourScaleId, colourScale, valueScale);
 
-                    // Add some text details about dataa
+                    // Add some text details about data
                     drawDataDetails(dataDetailsId, filteredData, threshold);
 
-                    var volcanoLayer = L.geoJson(null, {
-                        pointToLayer: function (data, latlng) {
-                            // return L.circleMarker(latlng, {style: volcanoStyle});
-                            return L.shapeMarker(latlng, {
-                                fillColor: "#ff0000",
-                                color: "#ff0000",
-                                shape: "triangle",
-                                radius: 10
-                            });
-                        },
-                        onEachFeature: function (feature, layer) {
-                            if (feature.properties && feature.properties.name) {
-                                layer.bindPopup(feature.properties.name);
-                            }
-                        },
-                        filter: function (feature, layer) {
-                            return isKnownVolcano(feature.properties.name);
-                        }
-                    });
+                    // Draw the volcano icons
+                    drawVolcanoIcons(map);
 
-                    // var volcanoStyle = { color: '#f00' };
-                    // var volcanoCircleLayer = L.geoJson(null, {
-                    //     pointToLayer: function (data, latlng) {
-                    //         return L.circleMarker(latlng, {style: volcanoStyle});
-                    //     },
-                    //     onEachFeature: function (feature, layer) {
-                    //         if (feature.properties && feature.properties.name) {
-                    //             layer.bindPopup(feature.properties.name);
-                    //         }
-                    //     } 
-                    // });
-
-                    omnivore.kml("data/volcanoes/GVPWorldVolcanoes-List.kml", null, volcanoLayer).addTo(map);
-                    // omnivore.kml("data/volcanoes/GVPWorldVolcanoes-List.kml", null, volcanoCircleLayer).addTo(map);
-                });
-
-            /*
-            d3.csv(csvUrl)
-                .row(processCsvRow)
-                .get(function (data) {
-                    var filteredData = data.filter(function (d) { return d.threshold === threshold}),
-                        aep = extractArray(filteredData, "aep"),
-                        colourScale = createNormalisedColourScale(aep, colourScheme),
-                        valueScale = createLogNormScale(aep),
-                        circles = createCircles(filteredData, colourScale, valueScale);
-                        features = L.featureGroup(circles),
-                        maxLat = d3.max(data, function (d) {return d.latitude; }),
-                        minLat = d3.min(data, function (d) {return d.latitude; }),
-                        maxLong = d3.max(data, function (d) {return d.longitude; }),
-                        minLong = d3.min(data, function (d) {return d.longitude; }),
-                        southWest = L.latLng(minLat, minLong),
-                        northEast = L.latLng(maxLat, maxLong),
-                        bounds = L.latLngBounds(southWest, northEast);
-                    
-                    // features.addTo(map);
-                    // console.log("d3.csv");
-                    // console.log(filteredData);
-
-                    // // Zoom in on features
-                    // // Note: centre map on unfiltered data, as filtered data is often empty
-                    // map.fitBounds(bounds);
-
-                    // // Draw the colour scale
-                    // drawColourLegend(colourScaleId, colourScale, valueScale);
-
-                    // // Add some text details about dataa
-                    // drawDataDetails(dataDetailsId, filteredData, threshold);
+                    // TODO: add volcano icons to layers control
+                    // var featuresLayer = {
+                    //     "features": features,
+                    //     "Sudan": volcMap
+                    // };
+                    mapLayers["Dots"] = features;
+                    L.control.layers(null, mapLayers).addTo(map);
+                    // L.control.layers(null, featuresLayer).addTo(map);
+                })
+                .fail (function (error) {
+                    console.log("Error loading CSV file.");
+                    throw error;
                 });
             */
         };
     return {
         drawMap: drawMap
     }
-}($, L, d3));
+}($, L, d3, omnivore));

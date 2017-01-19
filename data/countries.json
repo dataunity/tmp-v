@@ -1,0 +1,84 @@
+{
+    "Africa": [
+        {"name": "Cameroon", "disk_name": "cameroon"},
+        {"name": "Cape Verde", "disk_name": "capeverde"},
+        {"name": "Comoros", "disk_name": "comoros"},
+        {"name": "Djibouti", "disk_name": "djibouti"},
+        {"name": "DR Congo", "disk_name": "drcongo"},
+        {"name": "DR Congo / Rwanda", "disk_name": "drcongo-rwanda"},
+        {"name": "Eritrea", "disk_name": "eritrea"},
+        {"name": "Ethiopia / Djibouti", "disk_name": "ethiopia-djibouti"},
+        {"name": "Ethiopia", "disk_name": "ethiopia"},
+        {"name": "Kenya", "disk_name": "kenya"},
+        {"name": "Madagascar", "disk_name": "madagascar"},
+        {"name": "South Africa", "disk_name": "southafrica"},
+        {"name": "Sudan", "disk_name": "sudan"},
+        {"name": "Tanzania", "disk_name": "tanzania"},
+        {"name": "Uganda", "disk_name": "uganda"}
+    ],
+    "Antarctica": [
+        {"name": "Antarctica", "disk_name": "antarctica"}
+    ],
+    "Asia": [
+        {"name": "Armenia / Azerbaijan", "disk_name": "armenia-azerbaijan"},
+        {"name": "China", "disk_name": "china"},
+        {"name": "China / North Korea", "disk_name": "china-northkorea"},
+        {"name": "India", "disk_name": "india"},
+        {"name": "Mongolia", "disk_name": "mongolia"},
+        {"name": "South Korea", "disk_name": "southkorea"},
+        {"name": "Taiwan", "disk_name": "taiwan"}
+    ],
+    "Australasia": [
+        {"name": "Australia", "disk_name": "australia"},
+        {"name": "Fiji", "disk_name": "fiji"},
+        {"name": "New Zealand", "disk_name": "newzealand"},
+        {"name": "Papua New Guinea", "disk_name": "papuanewguinea"},
+        {"name": "Philippines", "disk_name": "philippines"},
+        {"name": "Samoa", "disk_name": "samoa"},
+        {"name": "Solomon Islands", "disk_name": "solomonislands"},
+        {"name": "Tonga", "disk_name": "tonga"},
+        {"name": "Vanuatu", "disk_name": "vanuatu"}
+    ],
+    "Europe": [
+        {"name": "France", "disk_name": "france"},
+        {"name": "Greece", "disk_name": "greece"},
+        {"name": "Iceland", "disk_name": "iceland"},
+        {"name": "Italy", "disk_name": "italy"},
+        {"name": "Netherlands", "disk_name": "netherlands"},
+        {"name": "Norway", "disk_name": "norway"},
+        {"name": "Portugal", "disk_name": "portugal"},
+        {"name": "Russia", "disk_name": "russia"},
+        {"name": "Spain", "disk_name": "spain"},
+        {"name": "Turkey", "disk_name": "turkey"},
+        {"name": "United Kingdom", "disk_name": "unitedkingdom"}
+    ],
+    "Middle East": [
+        {"name": "Saudi Arabia", "disk_name": "saudiarabia"},
+        {"name": "Yemen", "disk_name": "yemen"}
+    ],
+    "North America": [
+        {"name": "Canada", "disk_name": "canada"},
+        {"name": "United States", "disk_name": "unitedstates"}
+    ],
+    "South America": [
+        {"name": "Argentina", "disk_name": "argentina"},
+        {"name": "Chile / Argentina", "disk_name": "chile-argentina"},
+        {"name": "Chile / Bolivia", "disk_name": "chile-bolivia"},
+        {"name": "Chile", "disk_name": "chile"},
+        {"name": "Colombia-ecuador", "disk_name": "colombia-ecuador"},
+        {"name": "Colombia", "disk_name": "colombia"},
+        {"name": "Costarica", "disk_name": "costarica"},
+        {"name": "Dominica", "disk_name": "dominica"},
+        {"name": "Ecuador", "disk_name": "ecuador"},
+        {"name": "El Salvador", "disk_name": "elsalvador"},
+        {"name": "Guatemala", "disk_name": "guatemala"},
+        {"name": "Mexico / Guatemala", "disk_name": "mexico-guatemala"},
+        {"name": "Mexico", "disk_name": "mexico"},
+        {"name": "Nicaragua", "disk_name": "nicaragua"},
+        {"name": "Panama", "disk_name": "panama"},
+        {"name": "Peru", "disk_name": "peru"},
+        {"name": "Saint Lucia", "disk_name": "saintlucia"},
+        {"name": "Saint Vincent and the Grenadines", "disk_name": "saintvincentandthegrenadines"},
+        {"name": "Saint Kitts and Nevis", "disk_name": "saintkittsandnevis"}
+    ]
+}
