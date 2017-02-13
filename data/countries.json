@@ -24,20 +24,15 @@
         {"name": "China", "disk_name": "china"},
         {"name": "China / North Korea", "disk_name": "china-northkorea"},
         {"name": "India", "disk_name": "india"},
+        {"name": "Indonesia", "disk_name": "indonesia"},
+        {"name": "Japan", "disk_name": "japan"},
         {"name": "Mongolia", "disk_name": "mongolia"},
-        {"name": "South Korea", "disk_name": "southkorea"},
-        {"name": "Taiwan", "disk_name": "taiwan"}
-    ],
-    "Australasia": [
-        {"name": "Australia", "disk_name": "australia"},
-        {"name": "Fiji", "disk_name": "fiji"},
-        {"name": "New Zealand", "disk_name": "newzealand"},
-        {"name": "Papua New Guinea", "disk_name": "papuanewguinea"},
         {"name": "Philippines", "disk_name": "philippines"},
-        {"name": "Samoa", "disk_name": "samoa"},
-        {"name": "Solomon Islands", "disk_name": "solomonislands"},
-        {"name": "Tonga", "disk_name": "tonga"},
-        {"name": "Vanuatu", "disk_name": "vanuatu"}
+        {"name": "Saudi Arabia", "disk_name": "saudiarabia"},
+        {"name": "South Korea", "disk_name": "southkorea"},
+        {"name": "Taiwan", "disk_name": "taiwan"},
+        {"name": "Turkey", "disk_name": "turkey"},
+        {"name": "Yemen", "disk_name": "yemen"}
     ],
     "Europe": [
         {"name": "France", "disk_name": "france"},
@@ -49,15 +44,31 @@
         {"name": "Portugal", "disk_name": "portugal"},
         {"name": "Russia", "disk_name": "russia"},
         {"name": "Spain", "disk_name": "spain"},
-        {"name": "Turkey", "disk_name": "turkey"},
         {"name": "United Kingdom", "disk_name": "unitedkingdom"}
     ],
-    "Middle East": [
-        {"name": "Saudi Arabia", "disk_name": "saudiarabia"},
-        {"name": "Yemen", "disk_name": "yemen"}
+    "Oceania": [
+        {"name": "Australia", "disk_name": "australia"},
+        {"name": "Fiji", "disk_name": "fiji"},
+        {"name": "New Zealand", "disk_name": "newzealand"},
+        {"name": "Papua New Guinea", "disk_name": "papuanewguinea"},
+        {"name": "Samoa", "disk_name": "samoa"},
+        {"name": "Solomon Islands", "disk_name": "solomonislands"},
+        {"name": "Tonga", "disk_name": "tonga"},
+        {"name": "Vanuatu", "disk_name": "vanuatu"}
     ],
     "North America": [
         {"name": "Canada", "disk_name": "canada"},
+        {"name": "Costa Rica", "disk_name": "costarica"},
+        {"name": "Dominica", "disk_name": "dominica"},
+        {"name": "El Salvador", "disk_name": "elsalvador"},
+        {"name": "Guatemala", "disk_name": "guatemala"},
+        {"name": "Mexico / Guatemala", "disk_name": "mexico-guatemala"},
+        {"name": "Mexico", "disk_name": "mexico"},
+        {"name": "Nicaragua", "disk_name": "nicaragua"},
+        {"name": "Panama", "disk_name": "panama"},
+        {"name": "Saint Lucia", "disk_name": "saintlucia"},
+        {"name": "Saint Vincent and the Grenadines", "disk_name": "saintvincentandthegrenadines"},
+        {"name": "Saint Kitts and Nevis", "disk_name": "saintkittsandnevis"},
         {"name": "United States", "disk_name": "unitedstates"}
     ],
     "South America": [
@@ -67,18 +78,7 @@
         {"name": "Chile", "disk_name": "chile"},
         {"name": "Colombia-ecuador", "disk_name": "colombia-ecuador"},
         {"name": "Colombia", "disk_name": "colombia"},
-        {"name": "Costarica", "disk_name": "costarica"},
-        {"name": "Dominica", "disk_name": "dominica"},
         {"name": "Ecuador", "disk_name": "ecuador"},
-        {"name": "El Salvador", "disk_name": "elsalvador"},
-        {"name": "Guatemala", "disk_name": "guatemala"},
-        {"name": "Mexico / Guatemala", "disk_name": "mexico-guatemala"},
-        {"name": "Mexico", "disk_name": "mexico"},
-        {"name": "Nicaragua", "disk_name": "nicaragua"},
-        {"name": "Panama", "disk_name": "panama"},
-        {"name": "Peru", "disk_name": "peru"},
-        {"name": "Saint Lucia", "disk_name": "saintlucia"},
-        {"name": "Saint Vincent and the Grenadines", "disk_name": "saintvincentandthegrenadines"},
-        {"name": "Saint Kitts and Nevis", "disk_name": "saintkittsandnevis"}
+        {"name": "Peru", "disk_name": "peru"}
     ]
 }

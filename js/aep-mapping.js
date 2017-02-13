@@ -450,7 +450,7 @@ Ashfall.maps = (function ($, L, d3, omnivore) {
             dataText += " points for threshold " + threshold;
             $("#" + dataDetailsId).html(dataText);
         },
-        drawVolcanoIcons = function (map) {
+        createVolcanoIconsLayer = function (map) {
             var isKnownVolcano = Ashfall.volcanoes.isKnownVolcano,
                 volcIcon = L.icon({
                     iconUrl: 'images/volcano-icon.png',
@@ -497,7 +497,7 @@ Ashfall.maps = (function ($, L, d3, omnivore) {
             // });
             // omnivore.kml("data/volcanoes/GVPWorldVolcanoes-List.kml", null, volcanoCircleLayer).addTo(map);
 
-            omnivore.kml("data/volcanoes/GVPWorldVolcanoes-List.kml", null, volcanoLayer).addTo(map);
+            return omnivore.kml("data/volcanoes/GVPWorldVolcanoes-List.kml", null, volcanoLayer);
         },
         // DEPRECATED
         extendBounds = function (bounds, llcrnrlat, urcrnrlat, llcrnrlon, urcrnrlon) {
@@ -529,114 +529,10 @@ Ashfall.maps = (function ($, L, d3, omnivore) {
             }
         },
         map = null,
-        drawMap = function (mapId, colourScaleId, dataDetailsId, countries, measure, threshold, colourScheme, countryNameLoopup) {
-            var colourScale;
-
-            if (measure !== "aep" && measure !== "ari") {
-                throw new Error("The measure must be AEP or ARI");
-            }
-
-            // Not ideal keeping one copy of map, but trouble removing
-            // previous Leaflet map (Leaflet decorates html element)
-            if (map) {
-                console.log("Removing map");
-                map.remove();
-            } else {
-                console.log("Not removing map");
-            }
-
-            map = L.map(mapId);
-            addTileLayer(map);
-
-            // Use promises to load country data in parallel
-            var countryPromises = [];
-            $.each(countries, function (i, country) {
-                var deferred = $.Deferred(),
-                    imageUrl = 'raster/' + country + '_threshold_' + threshold.toFixed(1) + '_' + colourScheme + '_' + measure + '.png',
-                    jsonUrl = 'raster/' + country + '.json';
-
-                $.getJSON(jsonUrl)
-                    .then(function (data) {
-                        // Get map image bounds
-                        var southWestLat = data.bounds.south_west_lat,
-                            southWestLong = data.bounds.south_west_long,
-                            northEastLat = data.bounds.north_east_lat,
-                            northEastLong = data.bounds.north_east_long,
-                            imageBounds = [[southWestLat, southWestLong], [northEastLat, northEastLong]],
-                            countOfPoints = data.threshold_info[threshold.toFixed(1)].count_of_points;
-
-                        deferred.resolve({
-                            "country": country, 
-                            "imageUrl": imageUrl, 
-                            "imageBounds": imageBounds,
-                            "countOfPoints": countOfPoints});
-                    })
-                    .fail (function (error) {
-                        deferred.reject(error);
-                    });
-
-                countryPromises.push(deferred.promise());
-            });
-
-            // When all country info is loaded, draw the map
-            $.when.apply($, countryPromises)
-                .then(function (data) {
-                    var mapLayers = {},
-                        mapBounds = null,
-                        dataDetails = "",
-                        numArgs = arguments.length;
-                     console.log(arguments);
-
-                    // Build layer for map
-                    $.each(arguments, function (i, countryData) {
-                        var country = countryData.country,
-                            imageUrl = countryData.imageUrl,
-                            imageBounds = countryData.imageBounds,
-                            mapLayer = L.imageOverlay(imageUrl, imageBounds),
-                            countOfPoints = countryData.countOfPoints,
-                            countryFriendlyName = countryNameLoopup[country] || country;
-
-                        // Show layer on map
-                        if (countOfPoints) {
-                            mapLayer.addTo(map);
-                            mapLayers[countryFriendlyName] = mapLayer;
-                        }
-
-                        // Remember max bounds
-                        if (i === 0) {
-                            mapBounds = L.latLngBounds(imageBounds);
-                        } else {
-                            mapBounds.extend(imageBounds);
-                        }
-
-                        // Remember number of points for each country
-                        dataDetails += countryFriendlyName + ": " + countOfPoints + " points";
-                        console.log(i + 1, arguments.length, numArgs);
-                        if (i + 1 < numArgs) {
-                            dataDetails += ", ";
-                        }
-                    });
-
-                    // Draw the map layers
-                    L.control.layers(null, mapLayers).addTo(map);
-                    if (mapBounds) {
-                        map.fitBounds(mapBounds);
-                    }
-
-                    // Draw the colour scale
-                    // drawColourLegend(colourScaleId, colourScale, valueScale);
-
-                    // Add some text details about data
-                    $("#" + dataDetailsId).html(dataDetails);
-                    // drawDataInfo(dataDetailsId, countOfPoints, threshold);
-                    // drawDataDetails(dataDetailsId, filteredData, threshold);
-
-                    // Draw the volcano icons
-                    drawVolcanoIcons(map);
-                });
-
-
-            /*
+        // DEPRECATED
+        drawPoints = function (map, colourScaleId, dataDetailsId, countries, measure, 
+            threshold, colourScheme, opacity, showVolcanoes, countryNameLoopup) {
+            // Plots individual data points on map for volcanoes
 
             // $.each(countries, function (i, country) {
             //     var imageUrl = 'raster/' + country + '_threshold_' + threshold.toFixed(1) + '_' + colourScheme + '_aep.png',
@@ -706,16 +602,16 @@ Ashfall.maps = (function ($, L, d3, omnivore) {
                         bounds = bounds.pad(0.01);
                         // map.fitBounds(bounds, { padding: [2,2] });
                     }
-                    map.fitBounds(bounds);
+                    // map.fitBounds(bounds);
 
                     // Draw the colour scale
                     drawColourLegend(colourScaleId, colourScale, valueScale);
 
                     // Add some text details about data
-                    drawDataDetails(dataDetailsId, filteredData, threshold);
+                    // drawDataDetails(dataDetailsId, filteredData, threshold);
 
                     // Draw the volcano icons
-                    drawVolcanoIcons(map);
+                    // drawVolcanoIcons(map);
 
                     // TODO: add volcano icons to layers control
                     // var featuresLayer = {
@@ -730,7 +626,417 @@ Ashfall.maps = (function ($, L, d3, omnivore) {
                     console.log("Error loading CSV file.");
                     throw error;
                 });
+        },
+        // DEBUG
+        // Creates a promise which gets json info from file and generates image layer info
+        createMapImagePromise = function (imageUrl, jsonUrl, label) {
+            var deferred = $.Deferred();
+                // imageUrl = 'temp-cumulate/' + prepost + '_snapLatLongToGrid_volc_' + volcNum + '.png',
+                // jsonUrl = 'temp-cumulate/' + prepost + '_snapLatLongToGrid_volc_' + volcNum + '.json';
+
+            $.getJSON(jsonUrl)
+                .then(function (data) {
+                    // Get map image bounds
+                    var southWestLat = data.bounds.south_west_lat,
+                        southWestLong = data.bounds.south_west_long,
+                        northEastLat = data.bounds.north_east_lat,
+                        northEastLong = data.bounds.north_east_long,
+                        imageBounds = [[southWestLat, southWestLong], [northEastLat, northEastLong]];
+                        // countOfPoints = data.threshold_info[threshold.toFixed(1)].count_of_points;
+
+                    deferred.resolve({
+                        "country": label, 
+                        "imageUrl": imageUrl, 
+                        "imageBounds": imageBounds});
+                        // "countOfPoints": countOfPoints});
+                })
+                .fail (function (error) {
+                    deferred.reject(error);
+                });
+            return deferred.promise();
+        },
+        // DEBUG
+        getCountryVolcNums = function (country) {
+            switch (country) {
+                case "kenya":
+                    return [
+                        222020,
+                        222030,
+                        222040,
+                        222051,
+                        222052,
+                        222053,
+                        222060,
+                        222090,
+                        222100,
+                        222130];
+                case "sudan":
+                    return [
+                        225030,
+                        225050];
+                default:
+                    throw new Error("Unrecognised country");
+            }
+        },
+        createMapLayers = function (map, layerLabel, promises, countryNameLoopup) {
+            // When all country info is loaded, draw the map
+            $.when.apply($, promises)
+                .then(function (data) {
+                    var mapLayers = {},
+                        mapBounds = null,
+                        dataDetails = "",
+                        numArgs = arguments.length;
+                     console.log(arguments);
+
+                    // Build layer for map
+                    $.each(arguments, function (i, countryData) {
+                        var country = countryData.country,
+                            imageUrl = countryData.imageUrl,
+                            imageBounds = countryData.imageBounds,
+                            imageOptions = {"opacity": opacity},
+                            mapLayer = L.imageOverlay(imageUrl, imageBounds, imageOptions),
+                            // countOfPoints = countryData.countOfPoints,
+                            countryFriendlyName = countryNameLoopup[country] || country;
+
+                        // Show layer on map
+                        //if (countOfPoints) {
+                        // mapLayer.addTo(map);
+                        mapLayers[countryFriendlyName] = mapLayer;
+                        //}
+
+                        // Remember max bounds
+                        // if (i === 0) {
+                        //     mapBounds = L.latLngBounds(imageBounds);
+                        // } else {
+                        //     mapBounds.extend(imageBounds);
+                        // }
+
+                        // Remember number of points for each country
+                        // dataDetails += countryFriendlyName + ": " + countOfPoints + " points";
+                        // console.log(i + 1, arguments.length, numArgs);
+                        // if (i + 1 < numArgs) {
+                        //     dataDetails += ", ";
+                        // }
+                    });
+
+                    // Draw the map layers
+                    var mapLayersCtrl = L.control.layers(null, mapLayers).addTo(map);
+                    $(mapLayersCtrl.getContainer()).prepend(layerLabel);
+                    if (mapBounds) {
+                        map.fitBounds(mapBounds);
+                    }
+
+                    // Add some text details about data
+                    // $("#" + dataDetailsId).html(dataDetails);
+                });
+        },
+        // DEBUG: Draw images of raw simulation data for volcano
+        debugDrawSimData = function (map, colourScaleId, dataDetailsId, countries, measure, 
+            threshold, colourScheme, opacity, showVolcanoes, countryNameLoopup) {
+            //
+            // Use promises to load country data in parallel
+            var volcNum = 225050; // Sudan - Meidob Volcanic Field
+            // var volcNum = 222051; // Kenya - Emuruangogolak
+            var promises = [];
+            $.each(countries, function (i, country) {
+                var volcNums = getCountryVolcNums(country);
+
+                $.each(volcNums, function (j, volcNum) {
+                    var imageUrl = 'temp-sim/' + country + '_simulation_points_v' + volcNum + '.png',
+                        jsonUrl = imageUrl + ".json",
+                        label = country + " " + volcNum,
+                        promise = createMapImagePromise(imageUrl, jsonUrl, label);
+                    promises.push(promise);
+                });
+
+                /*
+                var deferred = $.Deferred(),
+                    imageUrl = 'temp-sim/' + country + '_simulation_points_v' + volcNum + '.png',
+                    jsonUrl = imageUrl + ".json";
+                    // jsonUrl = 'temp-sim/' + country + '.json';
+
+                var promise = createMapImagePromise(imageUrl, jsonUrl, label);
+                countryPromises.push(promise);
+
+                $.getJSON(jsonUrl)
+                    .then(function (data) {
+                        // Get map image bounds
+                        var southWestLat = data.bounds.south_west_lat,
+                            southWestLong = data.bounds.south_west_long,
+                            northEastLat = data.bounds.north_east_lat,
+                            northEastLong = data.bounds.north_east_long,
+                            imageBounds = [[southWestLat, southWestLong], [northEastLat, northEastLong]];
+                            // countOfPoints = data.threshold_info[threshold.toFixed(1)].count_of_points;
+
+                        deferred.resolve({
+                            "country": country, 
+                            "imageUrl": imageUrl, 
+                            "imageBounds": imageBounds});
+                            // "countOfPoints": countOfPoints});
+                    })
+                    .fail (function (error) {
+                        deferred.reject(error);
+                    });
+
+                countryPromises.push(deferred.promise());
+                */
+            });
+
+            createMapLayers(map, "&nbsp;debug: raw sim data&nbsp;", promises, countryNameLoopup);
+
+            /*
+            // When all country info is loaded, draw the map
+            $.when.apply($, countryPromises)
+                .then(function (data) {
+                    var mapLayers = {},
+                        mapBounds = null,
+                        dataDetails = "",
+                        numArgs = arguments.length;
+                     console.log(arguments);
+
+                    // Build layer for map
+                    $.each(arguments, function (i, countryData) {
+                        var country = countryData.country,
+                            imageUrl = countryData.imageUrl,
+                            imageBounds = countryData.imageBounds,
+                            imageOptions = {"opacity": opacity},
+                            mapLayer = L.imageOverlay(imageUrl, imageBounds, imageOptions),
+                            // countOfPoints = countryData.countOfPoints,
+                            countryFriendlyName = countryNameLoopup[country] || country;
+
+                        // Show layer on map
+                        //if (countOfPoints) {
+                        mapLayer.addTo(map);
+                        mapLayers[countryFriendlyName] = mapLayer;
+                        //}
+
+                        // Remember max bounds
+                        if (i === 0) {
+                            mapBounds = L.latLngBounds(imageBounds);
+                        } else {
+                            mapBounds.extend(imageBounds);
+                        }
+
+                        // Remember number of points for each country
+                        // dataDetails += countryFriendlyName + ": " + countOfPoints + " points";
+                        // console.log(i + 1, arguments.length, numArgs);
+                        // if (i + 1 < numArgs) {
+                        //     dataDetails += ", ";
+                        // }
+                    });
+
+                    // Draw the map layers
+                    var mapLayersCtrl = L.control.layers(null, mapLayers).addTo(map);
+                    $(mapLayersCtrl.getContainer()).prepend("&nbsp;debug: raw sim data&nbsp;");
+                    // if (mapBounds) {
+                    //     map.fitBounds(mapBounds);
+                    // }
+
+                    // Add some text details about data
+                    // $("#" + dataDetailsId).html(dataDetails);
+                });
             */
+        },
+        // DEBUG: Draw images of cumulate aep data before and after snap to grid
+        debugDrawCumulateSnapData = function (map, colourScaleId, dataDetailsId, countries, measure, 
+            threshold, colourScheme, opacity, showVolcanoes, countryNameLoopup) {
+            var cumulateStages = ["volcaeps", "aep"];
+
+            // Use promises to load country data in parallel
+            var promises = [];
+            $.each(countries, function (i, country) {
+                var volcNums = getCountryVolcNums(country);
+
+                $.each(volcNums, function (j, volcNum) {
+                    $.each(cumulateStages, function (k, cumulateStage) {
+                        var imageUrl = 'temp-cumulate/' + country + '_' + cumulateStage + '_' + threshold.toFixed(1) + '_v' + volcNum + '.png',
+                            jsonUrl = imageUrl + ".json",
+                            label = country + " " + cumulateStage + " " + threshold.toFixed(1) + " " + volcNum,
+                            promise = createMapImagePromise (imageUrl, jsonUrl, label);
+                        promises.push(promise);
+                    });
+                });
+            });
+
+            createMapLayers(map, "&nbsp;debug: cumulate process&nbsp;", promises, countryNameLoopup);
+
+            /*
+            // When all country info is loaded, draw the map
+            $.when.apply($, promises)
+                .then(function (data) {
+                    var mapLayers = {},
+                        mapBounds = null,
+                        dataDetails = "",
+                        numArgs = arguments.length;
+                     console.log(arguments);
+
+                    // Build layer for map
+                    $.each(arguments, function (i, countryData) {
+                        var country = countryData.country,
+                            imageUrl = countryData.imageUrl,
+                            imageBounds = countryData.imageBounds,
+                            imageOptions = {"opacity": opacity},
+                            mapLayer = L.imageOverlay(imageUrl, imageBounds, imageOptions),
+                            // countOfPoints = countryData.countOfPoints,
+                            countryFriendlyName = countryNameLoopup[country] || country;
+
+                        // Show layer on map
+                        //if (countOfPoints) {
+                        // mapLayer.addTo(map);
+                        mapLayers[countryFriendlyName] = mapLayer;
+                        //}
+
+                        // Remember max bounds
+                        // if (i === 0) {
+                        //     mapBounds = L.latLngBounds(imageBounds);
+                        // } else {
+                        //     mapBounds.extend(imageBounds);
+                        // }
+
+                        // Remember number of points for each country
+                        // dataDetails += countryFriendlyName + ": " + countOfPoints + " points";
+                        // console.log(i + 1, arguments.length, numArgs);
+                        // if (i + 1 < numArgs) {
+                        //     dataDetails += ", ";
+                        // }
+                    });
+
+                    // Draw the map layers
+                    var mapLayersCtrl = L.control.layers(null, mapLayers).addTo(map);
+                    $(mapLayersCtrl.getContainer()).prepend("&nbsp;debug: cumulate process&nbsp;");
+                    if (mapBounds) {
+                        map.fitBounds(mapBounds);
+                    }
+
+                    // Add some text details about data
+                    // $("#" + dataDetailsId).html(dataDetails);
+                });
+            */
+        },
+        drawMap = function (mapId, colourScaleId, dataDetailsId, countries, measure, 
+            threshold, colourScheme, opacity, showVolcanoes, countryNameLoopup) {
+            var colourScale;
+
+            if (measure !== "aep" && measure !== "ari") {
+                throw new Error("The measure must be AEP or ARI");
+            }
+
+            // Not ideal keeping one copy of map, but trouble removing
+            // previous Leaflet map (Leaflet decorates html element)
+            if (map) {
+                console.log("Removing map");
+                map.remove();
+            } else {
+                console.log("Not removing map");
+            }
+
+            map = L.map(mapId);
+            addTileLayer(map);
+
+            // Add scale bar (to show distance)
+            L.control.scale().addTo(map);
+
+            // Use promises to load country data in parallel
+            var countryPromises = [];
+            $.each(countries, function (i, country) {
+                var deferred = $.Deferred(),
+                    imageUrl = 'raster/' + country + '_threshold_' + threshold.toFixed(1) + '_' + colourScheme + '_' + measure + '.png',
+                    jsonUrl = 'raster/' + country + '.json';
+
+                $.getJSON(jsonUrl)
+                    .then(function (data) {
+                        // Get map image bounds
+                        var southWestLat = data.bounds.south_west_lat,
+                            southWestLong = data.bounds.south_west_long,
+                            northEastLat = data.bounds.north_east_lat,
+                            northEastLong = data.bounds.north_east_long,
+                            imageBounds = [[southWestLat, southWestLong], [northEastLat, northEastLong]],
+                            countOfPoints = data.threshold_info[threshold.toFixed(1)].count_of_points;
+
+                        deferred.resolve({
+                            "country": country, 
+                            "imageUrl": imageUrl, 
+                            "imageBounds": imageBounds,
+                            "countOfPoints": countOfPoints});
+                    })
+                    .fail (function (error) {
+                        deferred.reject(error);
+                    });
+
+                countryPromises.push(deferred.promise());
+            });
+
+            // When all country info is loaded, draw the map
+            $.when.apply($, countryPromises)
+                .then(function (data) {
+                    var mapLayers = {},
+                        mapBounds = null,
+                        dataDetails = "",
+                        numArgs = arguments.length;
+                     console.log(arguments);
+
+                    // Build layer for map
+                    $.each(arguments, function (i, countryData) {
+                        var country = countryData.country,
+                            imageUrl = countryData.imageUrl,
+                            imageBounds = countryData.imageBounds,
+                            imageOptions = {"opacity": opacity},
+                            mapLayer = L.imageOverlay(imageUrl, imageBounds, imageOptions),
+                            countOfPoints = countryData.countOfPoints,
+                            countryFriendlyName = countryNameLoopup[country] || country;
+
+                        // Show layer on map
+                        if (countOfPoints) {
+                            mapLayer.addTo(map);
+                            mapLayers[countryFriendlyName] = mapLayer;
+                        }
+
+                        // Remember max bounds
+                        if (i === 0) {
+                            mapBounds = L.latLngBounds(imageBounds);
+                        } else {
+                            mapBounds.extend(imageBounds);
+                        }
+
+                        // Remember number of points for each country
+                        dataDetails += countryFriendlyName + ": " + countOfPoints + " points";
+                        console.log(i + 1, arguments.length, numArgs);
+                        if (i + 1 < numArgs) {
+                            dataDetails += ", ";
+                        }
+                    });
+
+                    // Draw the volcano icons
+                    if (showVolcanoes) {
+                        mapLayers["Volcanoes"] = createVolcanoIconsLayer(map);
+                        mapLayers["Volcanoes"].addTo(map);
+                    }
+
+                    // Draw the map layers
+                    var mapLayersCtrl = L.control.layers(null, mapLayers).addTo(map);
+                    $(mapLayersCtrl.getContainer()).prepend("&nbsp;AEP/ARI&nbsp;");
+                    // console.log("Put fit bounds back in");
+                    if (mapBounds) {
+                        map.fitBounds(mapBounds);
+                    }
+
+                    // Draw the colour scale
+                    // drawColourLegend(colourScaleId, colourScale, valueScale);
+
+                    // Add some text details about data
+                    $("#" + dataDetailsId).html(dataDetails);
+                    // drawDataInfo(dataDetailsId, countOfPoints, threshold);
+                    // drawDataDetails(dataDetailsId, filteredData, threshold);
+
+                    // DEBUG
+                    // drawPoints(map, colourScaleId, dataDetailsId, countries, measure, 
+                    //     threshold, colourScheme, opacity, showVolcanoes, countryNameLoopup);
+                    debugDrawSimData(map, colourScaleId, dataDetailsId, countries, measure, 
+                        threshold, colourScheme, opacity, showVolcanoes, countryNameLoopup);
+                    debugDrawCumulateSnapData(map, colourScaleId, dataDetailsId, countries, measure, 
+                        threshold, colourScheme, opacity, showVolcanoes, countryNameLoopup);
+                });
+
         };
     return {
         drawMap: drawMap

@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-    
     <title>Ashfall</title>
 
     <meta charset="utf-8" />
@@ -19,7 +18,6 @@
     <script src="js/aep-mapping.js"></script>
 </head>
 <body>
-
 
 <h1>AEP</h1>
 <div class="choices-row">
@@ -63,6 +61,19 @@
         </select>
     </span>
 </div>
+<div class="choices-row">
+    <span class="choices-title">Opacity (0-100):</span>
+    <span>
+        <input id="opacity" type="range" min="0" max="100" value="80" class="map-option"></input>
+    </span>
+    <span id="opacity-value"></span>
+</div>
+<div class="choices-row">
+    <span class="choices-title">Show volcanoes:</span>
+    <span>
+        <input id="showVolcanoes" name="showVolcanoes" type="checkbox" class="map-option" checked></input>
+    </span>
+</div>
 <div id="map" class="map left"></div>
 <div id="color-bar" class="color-legend">
     <img id="color-bar-img">
@@ -72,6 +83,9 @@
 
 <script>
     $(document).ready(function () {
+
+        // Set default opacity label
+        $("#opacity-value").text($("#opacity").val());
 
         // Get the selected countries as an array
         function getCountriesSelection () {
@@ -88,11 +102,13 @@
             return countries.values();
         }
 
-        function drawMap (countries, measure, threshold, colourScheme, countryNameLookup) {
-            console.log(countries, measure, threshold, colourScheme);
+        function drawMap (countries, measure, threshold, colourScheme, opacity, showVolcanoes, countryNameLookup) {
+            console.log(countries, measure, threshold, colourScheme, opacity, showVolcanoes);
             Ashfall.maps.drawMap('map', 'color-scale', 'data-details', 
                 countries, measure, threshold,
-                colourScheme, countryNameLookup);
+                colourScheme, opacity, 
+                showVolcanoes,
+                countryNameLookup);
         }
 
         function drawColorBar (measure, colourScheme) {
@@ -105,8 +121,15 @@
             var countries = getCountriesSelection(),
                 measure = $("#measure").val(),
                 threshold = parseFloat($("#threshold").val()),
-                colourScheme = $("#colourscheme").val();
-            drawMap(countries, measure, threshold, colourScheme, countryNameLookup);
+                colourScheme = $("#colourscheme").val(),
+                opacity = $("#opacity").val(),
+                showVolcanoes = $('#showVolcanoes').is(":checked");
+                // showVolcanoes = $("#showVolcanoes").val();
+
+            // Convert opacity to 0.0 to 1.0 range
+            opacity = opacity / 100.0;
+            drawMap(countries, measure, threshold, colourScheme, opacity,
+                showVolcanoes, countryNameLookup);
             drawColorBar(measure, colourScheme);
         }
 
@@ -131,12 +154,15 @@
                             .text("All " + continentName));
 
                     // Add countries
-                    $.each(countries, function(i, country) {   
-                        optGroup
-                            .append($("<option></option>")
-                                .attr("value", country.disk_name)
-                                .text(country.name));
-
+                    $.each(countries, function(i, country) {
+                        console.log("TODO: Remove country filter")
+                        if (country.name === "Kenya" || country.name === "Sudan") {
+                            optGroup
+                                .append($("<option></option>")
+                                    .attr("value", country.disk_name)
+                                    .text(country.name));
+                        }
+                        
                         // Remember country disk name to friendly name
                         countryNameLookup[country.disk_name] = country.name;
                     });
@@ -145,6 +171,7 @@
                 });
 
                 // Draw the default map (when page first loads)
+                // $("#countries").val("kenya");
                 $("#countries").val("sudan");
 
                 // Set up event handlers for changes to selections
@@ -158,6 +185,11 @@
                     // console.log("Redrawing map");
                     // console.log(event);
                     redrawMap(countryNameLookup);
+                });
+                $("#opacity").on("change", function (event) {
+                    // console.log("Redrawing map");
+                    // console.log(event);
+                    $("#opacity-value").text($("#opacity").val());
                 });
 
                 redrawMap(countryNameLookup);
